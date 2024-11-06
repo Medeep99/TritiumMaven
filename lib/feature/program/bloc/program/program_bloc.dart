@@ -1,10 +1,12 @@
 import 'dart:async';
+// import 'dart:nativewrappers/_internal/vm/lib/internal_patch.dart';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../database/database.dart';
 import '../../../exercise/exercise.dart';
+
 
 part 'program_event.dart';
 part 'program_state.dart';
@@ -73,22 +75,22 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
             programTemplateId: programTemplateId,
           ));
 
-         /* for(ExerciseSet exerciseSet in exerciseBundle.exerciseSets) {
-            int templateExerciseSetId = await templateExerciseSetDao.addTemplateExerciseSet(TemplateExerciseSet(
-              checked: exerciseSet.checked,
-              type: exerciseSet.type,
-              exerciseGroupId: templateExerciseGroupId,
-              templateId: programTemplateId,
-            ));
+        //  for(ExerciseSet exerciseSet in exerciseBundle.exerciseSets) {
+        //     int templateExerciseSetId = await templateExerciseSetDao.addTemplateExerciseSet(TemplateExerciseSet(
+        //       checked: exerciseSet.checked,
+        //       type: exerciseSet.type,
+        //       exerciseGroupId: templateExerciseGroupId,
+        //       templateId: programTemplateId,
+        //     ));
 
-            for(ExerciseSetData exerciseSetData in exerciseSet.data) {
-              await templateExerciseSetDataDao.addTemplateExerciseSetData(TemplateExerciseSetData(
-                value: exerciseSetData.value,
-                fieldType: exerciseSetData.fieldType,
-                exerciseSetId: templateExerciseSetId,
-              ));
-            }
-          }*/
+        //     for(ExerciseSetData exerciseSetData in exerciseSet.data) {
+        //       await templateExerciseSetDataDao.addTemplateExerciseSetData(TemplateExerciseSetData(
+        //         value: exerciseSetData.value,
+        //         fieldType: exerciseSetData.fieldType,
+        //         exerciseSetId: templateExerciseSetId,
+        //       ));
+        //     }
+        //   }
         }
       }
     }
@@ -147,3 +149,6 @@ class ProgramBloc extends Bloc<ProgramEvent, ProgramState> {
     return programs;
   }
 }
+
+
+

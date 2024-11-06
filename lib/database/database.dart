@@ -83,7 +83,7 @@ abstract class MavenDatabase extends FloorDatabase {
 
   static final Callback _callback = Callback(
     onCreate: (database, version) {
-      _isFirstTime = true;
+      _isFirstTime = false;
     },
     onOpen: (database) {},
     onUpgrade: (database, startVersion, endVersion) {},

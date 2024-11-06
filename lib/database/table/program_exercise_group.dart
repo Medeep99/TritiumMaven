@@ -42,7 +42,7 @@ class ProgramExerciseGroup extends BaseExerciseGroup {
   @ColumnInfo(name: 'program_template_id')
   final int programTemplateId;
 
-  @override
+  // @override
   ProgramExerciseGroup copyWith({
     int? id,
     Timed? timer,

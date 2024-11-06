@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 class LocaleConverter extends TypeConverter<Locale, String> {
   @override
   Locale decode(String databaseValue) {
-    return Locale.fromSubtags(
-      languageCode: databaseValue.split('_')[0],
-      countryCode: databaseValue.split('_')[1],
+    return const Locale.fromSubtags(
+      languageCode: "en",
+      countryCode: "us",
     );
   }
 

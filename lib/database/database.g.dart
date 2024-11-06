@@ -6,21 +6,32 @@ part of 'database.dart';
 // FloorGenerator
 // **************************************************************************
 
+abstract class $MavenDatabaseBuilderContract {
+  /// Adds migrations to the builder.
+  $MavenDatabaseBuilderContract addMigrations(List<Migration> migrations);
+
+  /// Adds a database [Callback] to the builder.
+  $MavenDatabaseBuilderContract addCallback(Callback callback);
+
+  /// Creates the database and initializes it.
+  Future<MavenDatabase> build();
+}
+
 // ignore: avoid_classes_with_only_static_members
 class $FloorMavenDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static _$MavenDatabaseBuilder databaseBuilder(String name) =>
+  static $MavenDatabaseBuilderContract databaseBuilder(String name) =>
       _$MavenDatabaseBuilder(name);
 
   /// Creates a database builder for an in memory database.
   /// Information stored in an in memory database disappears when the process is killed.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static _$MavenDatabaseBuilder inMemoryDatabaseBuilder() =>
+  static $MavenDatabaseBuilderContract inMemoryDatabaseBuilder() =>
       _$MavenDatabaseBuilder(null);
 }
 
-class _$MavenDatabaseBuilder {
+class _$MavenDatabaseBuilder implements $MavenDatabaseBuilderContract {
   _$MavenDatabaseBuilder(this.name);
 
   final String? name;
@@ -29,19 +40,19 @@ class _$MavenDatabaseBuilder {
 
   Callback? _callback;
 
-  /// Adds migrations to the builder.
-  _$MavenDatabaseBuilder addMigrations(List<Migration> migrations) {
+  @override
+  $MavenDatabaseBuilderContract addMigrations(List<Migration> migrations) {
     _migrations.addAll(migrations);
     return this;
   }
 
-  /// Adds a database [Callback] to the builder.
-  _$MavenDatabaseBuilder addCallback(Callback callback) {
+  @override
+  $MavenDatabaseBuilderContract addCallback(Callback callback) {
     _callback = callback;
     return this;
   }
 
-  /// Creates the database and initializes it.
+  @override
   Future<MavenDatabase> build() async {
     final path = name != null
         ? await sqfliteDatabaseFactory.getDatabasePath(name!)

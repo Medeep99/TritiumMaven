@@ -7,6 +7,7 @@ class InheritedSettingsWidget extends InheritedWidget {
     super.key,
     required Settings settings,
     required Widget child,
+
   })  : _settings = settings,
         super(child: child);
 

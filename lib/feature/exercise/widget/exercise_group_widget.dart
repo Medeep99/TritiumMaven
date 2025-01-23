@@ -137,10 +137,12 @@ class _ExerciseGroupWidgetState extends State<ExerciseGroupWidget> {
                 return Padding(
                   padding: EdgeInsets.only(
                     left: T(context).space.large,
+                    right: T(context).space.large,
                     top: 0,
                     bottom: 8,
                   ),
                   child: Slidable(
+                    
                     endActionPane: ActionPane(
                       extentRatio: 0.2,
                       motion: const StretchMotion(),
@@ -161,7 +163,11 @@ class _ExerciseGroupWidgetState extends State<ExerciseGroupWidget> {
                         borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(12),
                           topLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
+                          topRight: Radius.circular(12),
+
                         ),
+                        
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -209,7 +215,7 @@ class _ExerciseGroupWidgetState extends State<ExerciseGroupWidget> {
                               IconButton(
                                 onPressed: () {},
                                 icon: Icon(
-                                  CupertinoIcons.map_pin,
+                                  CupertinoIcons.arrow_left,
                                   color: T(context).color.primary,
                                   size: 20,
                                 ),
@@ -234,13 +240,13 @@ class _ExerciseGroupWidgetState extends State<ExerciseGroupWidget> {
                     color: T(context).color.onSurfaceVariant,
                   ),
                 ),
-                previous: Text(
-                  "PREVIOUS",
-                  style: T(context).textStyle.bodyLarge.copyWith(
-                    fontSize: 13,
-                    color: T(context).color.onSurfaceVariant,
-                  ),
-                ),
+                // previous: Text(
+                //   "PREVIOUS",
+                //   style: T(context).textStyle.bodyLarge.copyWith(
+                //     fontSize: 13,
+                //     color: T(context).color.onSurfaceVariant,
+                //   ),
+                // ),
                 options: widget.exercise.fields
                     .where((e) => e.type != ExerciseFieldType.bodyWeight)
                     .toList()

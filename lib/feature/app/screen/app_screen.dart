@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maven/database/database.dart';
+import 'package:maven/database/database.dart';
+import 'package:maven/database/table/table.dart';
 import 'package:maven/feature/exercise/exercise.dart';
+import 'package:maven/feature/user/screen/user_edit_screen.dart';
+import 'package:maven/feature/user/widget/user_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
+import 'package:sqflite/sqflite.dart';
+import '../../../database/table/user.dart';
 import '../../home/home.dart';
 import '../../profile/screen/profile_screen.dart';
 import '../../progress/screen/progress_screen.dart';
@@ -15,17 +21,23 @@ class Maven extends StatefulWidget {
 
   @override
   State<Maven> createState() => _MavenState();
+
+
 }
+
 
 class _MavenState extends State<Maven> {
   final List<Widget> screens = <Widget>[
+    
     const HomeScreen(),
     const TemplateScreen(),
     const ProgressScreen(),
-    const ProfileScreen(),
+    const ProfileScreen(), 
+    
   ];
 
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
+ 
 
   final ExerciseTimerController timerController = ExerciseTimerController();
   final PanelController _panelController = PanelController();
@@ -35,11 +47,13 @@ class _MavenState extends State<Maven> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SafeArea(
         child: BlocBuilder<WorkoutBloc, WorkoutState>(
@@ -68,6 +82,10 @@ class _MavenState extends State<Maven> {
                     blurRadius: 3,
                   ),
                 ],
+                  defaultPanelState: PanelState.OPEN,  // Opens halfway on start
+  parallaxEnabled: false,
+  parallaxOffset: 0.2,
+
                 body: screens[_selectedIndex],
                 collapsed: IgnorePointer(
                   child: Container(
@@ -107,7 +125,7 @@ class _MavenState extends State<Maven> {
                               AsyncSnapshot<dynamic> snapshot) {
                             return Text(
                               'hey',
-                              //workoutDuration(state.workout?.timestamp ?? DateTime.now()),
+                              // workoutDuration(state.workout?.timestamp ?? DateTime.now()),
                               style: T(context).textStyle.bodyMedium,
                             );
                           },
@@ -168,6 +186,7 @@ class _MavenState extends State<Maven> {
             ),
             height: state.status.isActive ? (1 - panelPosition) * 80 : 80,
             child: NavigationBar(
+              
               onDestinationSelected: _onItemTapped,
               selectedIndex: _selectedIndex,
               destinations: const [
@@ -179,9 +198,12 @@ class _MavenState extends State<Maven> {
                   icon: Icon(Icons.fitness_center),
                   label: 'Workout',
                 ),
+                
                 NavigationDestination(
                   icon: Icon(Icons.stacked_line_chart),
+
                   label: 'Progress',
+                  
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.person),

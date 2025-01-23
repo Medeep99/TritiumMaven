@@ -25,3 +25,4 @@ abstract class TemplateDataDao {
   @delete
   Future<int> remove(TemplateData templateData);
 }
+

@@ -1,8 +1,9 @@
 import 'package:maven/common/common.dart';
 
 enum WeightUnit {
-  pound,
-  kilogram;
+  kilogram,
+  pound;
+  
 
   String get name {
     return toString().split('.').last.capitalize;
@@ -10,10 +11,11 @@ enum WeightUnit {
 
   String get abbreviated {
     switch (this) {
-      case WeightUnit.pound:
-        return 'lb';
       case WeightUnit.kilogram:
         return 'kg';
+      case WeightUnit.pound:
+        return 'lb';
+      
     }
   }
 }

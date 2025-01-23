@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maven/database/enum/unit.dart';
 
 import '../../../common/common.dart';
 import '../../../generated/l10n.dart';
@@ -49,33 +51,35 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     title: Text(S.current.exercises),
                   ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EquipmentScreen(),
-                        ),
-                      );
-                    },
-                    leading: const Icon(
-                      Icons.home_repair_service_rounded,
-                    ),
-                    title: const Text(
-                      'Equipment',
-                    ),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      // TODO: Add measureing feature
-                    },
-                    leading: const Icon(
-                      Icons.straighten,
-                    ),
-                    title: const Text(
-                      'Measure',
-                    ),
-                  ),
+                  // ListTile(
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //         builder: (context) => const EquipmentScreen(),
+                  //       ),
+                  //     );
+                  //   },
+                  //   leading: const Icon(
+                  //     Icons.home_repair_service_rounded,
+                  //   ),
+                  //   title: const Text(
+                  //     'Equipment',
+                  //   ),
+                  // ),
+                  // ListTile(
+                  //    onTap: () {
+                  //       Navigator.push(context,
+                  //       MaterialPageRoute(builder: (context)+>))            
+                  //                     ;
+                  //   },
+                  //   leading: const Icon(
+                  //     Icons.straighten,
+                  //   ),
+                  //   title: const Text(
+                  //     'Measure',
+                  //   ),
+                  // ),
                   ListTile(
                     onTap: () {
                       Navigator.push(

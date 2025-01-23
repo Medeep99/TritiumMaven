@@ -39,14 +39,14 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
       appBar: AppBar(
         title: const Text('Editor'),
         actions: [
-          IconButton(
-            onPressed: () {
+          // IconButton(
+          //   onPressed: () {
 
-            },
-            icon: const Icon(
-              Icons.help_outline,
-            )
-          ),
+          //   },
+          //   icon: const Icon(
+          //     Icons.help_outline,
+          //   )
+          // ),
           IconButton(
             onPressed: () {
               Navigator.pop(context, string);
@@ -64,6 +64,8 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
           children: [
             Expanded(
               child: Container(
+               
+                
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: T(context).color.surface,
@@ -89,24 +91,24 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
                 ),
               ),
             ),
-            const Heading(
-              title: 'Preview',
-              sliver: false,
-              size: HeadingSize.medium,
-            ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: T(context).color.surface,
-                ),
-                child: Markdown(
-                  softLineBreak: true,
-                  padding: EdgeInsets.all(T(context).space.large),
-                  data: string,
-                ),
-              ),
-            ),
+            // const Heading(
+            //   title: 'Preview',
+            //   sliver: false,
+            //   size: HeadingSize.medium,
+            // ),
+            // Expanded(
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(16),
+            //       color: T(context).color.surface,
+            //     ),
+            //     child: Markdown(
+            //       softLineBreak: true,
+            //       padding: EdgeInsets.all(T(context).space.large),
+            //       data: string,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -49,23 +49,23 @@ class SettingsScreen extends StatelessWidget {
                       height: T(context).space.large,
                     ),
                   ),
-                  Panel(
-                    context,
-                    Column(
-                      children: [
-                        ListTile(
-                          onTap: () {},
-                          leading: const Icon(Icons.fitness_center_outlined),
-                          title: const Text('Routine'),
-                        ),
-                        ListTile(
-                          onTap: () {},
-                          leading: const Icon(Icons.calculate_outlined),
-                          title: const Text('Plate Calculator'),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Panel(
+                  //   context,
+                  //   Column(
+                  //     children: [
+                  //       ListTile(
+                  //         onTap: () {},
+                  //         leading: const Icon(Icons.fitness_center_outlined),
+                  //         title: const Text('Routine'),
+                  //       ),
+                  //       ListTile(
+                  //         onTap: () {},
+                  //         leading: const Icon(Icons.calculate_outlined),
+                  //         title: const Text('Plate Calculator'),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   SliverToBoxAdapter(
                     child: SizedBox(
                       height: T(context).space.large,
@@ -126,25 +126,25 @@ class SettingsScreen extends StatelessWidget {
                           title: const Text('Theme'),
                           trailing: Text(InheritedThemeWidget.of(context).theme.name),
                         ),
-                        ListTile(
-                          onTap: () {},
-                          leading: const Icon(Icons.volume_up_outlined),
-                          title: const Text('Sound'),
-                        ),
-                        ListTile(
-                          onTap: () {},
-                          leading: const Icon(Icons.notifications_none_outlined),
-                          title: const Text('Notifications'),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => const LanguageScreen()));
-                          },
-                          leading: const Icon(Icons.language),
-                          title: const Text('Language'),
-                          trailing: Text(s(context).locale.languageCode.capitalize),
-                        ),
+                        // ListTile(
+                        //   onTap: () {},
+                        //   leading: const Icon(Icons.volume_up_outlined),
+                        //   title: const Text('Sound'),
+                        // ),
+                        // ListTile(
+                        //   onTap: () {},
+                        //   leading: const Icon(Icons.notifications_none_outlined),
+                        //   title: const Text('Notifications'),
+                        // ),
+                        // ListTile(
+                        //   onTap: () {
+                        //     Navigator.push(context,
+                        //         MaterialPageRoute(builder: (context) => const LanguageScreen()));
+                        //   },
+                        //   leading: const Icon(Icons.language),
+                        //   title: const Text('Language'),
+                        //   trailing: Text(s(context).locale.languageCode.capitalize),
+                        // ),
                       ],
                     ),
                   ),
@@ -153,65 +153,65 @@ class SettingsScreen extends StatelessWidget {
                       height: T(context).space.large,
                     ),
                   ),
+                  // Panel(
+                  //   context
+                    // Column(
+                    //   children: [
+                    //     ListTile(
+                    //       onTap: () {},
+                    //       leading: const Icon(Icons.backup),
+                    //       title: const Text('Backup'),
+                    //     ),
+                    //     ListTile(
+                    //       onTap: () {
+                    //         Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //             builder: (context) => const TransferImportExportScreen(),
+                    //           ),
+                    //         );
+                    //       },
+                    //       leading: const Icon(
+                    //         Icons.open_in_new_outlined,
+                    //       ),
+                    //       title: const Text(
+                    //         'Export & Import',
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                  // ),
+                  // SliverToBoxAdapter(
+                  //   child: SizedBox(
+                  //     height: T(context).space.large,
+                  //   ),
+                  // ),
                   Panel(
                     context,
                     Column(
                       children: [
-                        ListTile(
-                          onTap: () {},
-                          leading: const Icon(Icons.backup),
-                          title: const Text('Backup'),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TransferImportExportScreen(),
-                              ),
-                            );
-                          },
-                          leading: const Icon(
-                            Icons.open_in_new_outlined,
-                          ),
-                          title: const Text(
-                            'Export & Import',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: T(context).space.large,
-                    ),
-                  ),
-                  Panel(
-                    context,
-                    Column(
-                      children: [
-                        ListTile(
-                          onTap: () {},
-                          leading: const Icon(Icons.help_outline_outlined),
-                          title: const Text('Help'),
-                        ),
-                        ListTile(
-                          onTap: () {},
-                          leading: const Icon(Icons.feedback_outlined),
-                          title: const Text('Feedback'),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const AboutScreen(),
-                              ),
-                            );
-                          },
-                          leading: const Icon(Icons.info_outline),
-                          title: const Text('About'),
-                        ),
+                        // ListTile(
+                        //   onTap: () {},
+                        //   leading: const Icon(Icons.help_outline_outlined),
+                        //   title: const Text('Help'),
+                        // ),
+                        // ListTile(
+                        //   onTap: () {},
+                        //   leading: const Icon(Icons.feedback_outlined),
+                        //   title: const Text('Feedback'),
+                        // ),
+                        // ListTile(
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => const AboutScreen(),
+                        //       ),
+                        //     );
+                        //   },
+                        //   leading: const Icon(Icons.info_outline),
+                        //   title: const Text('About'),
+                        // ),
                       ],
                     ),
                   ),

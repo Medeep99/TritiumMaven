@@ -83,16 +83,16 @@ class _ExerciseSetWidgetState extends State<ExerciseSetWidget> {
             style: T(context).textStyle.labelSmall.copyWith(color: widget.set.type.color(context)),
           ),
         ),
-        previous: MButton(
-          onPressed: () {},
-          expand: false,
-          height: 35,
-          backgroundColor: Colors.transparent,
-          child: Text(
-            '-',
-            style: T(context).textStyle.bodyMedium,
-          ),
-        ),
+        // previous: MButton(
+        //   onPressed: () {},
+        //   expand: false,
+        //   height: 35,
+        //   backgroundColor: Colors.transparent,
+        //   child: Text(
+        //     '-',
+        //     style: T(context).textStyle.bodyMedium,
+        //   ),
+        // ),
         options: widget.set.data
             .where((data) => data.fieldType != ExerciseFieldType.bodyWeight)
             .toList()

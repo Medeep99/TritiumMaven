@@ -30,7 +30,7 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen>
   @override
   void initState() {
     tabController = TabController(
-      length: 3,
+      length: 2,
       vsync: this,
     );
     super.initState();
@@ -50,7 +50,7 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen>
         } else if (state.status.isLoaded && template != null) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Template'),
+              title: const Text('Workout'),
               actions: [
                 IconButton(
                   onPressed: () {
@@ -141,8 +141,8 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen>
                 controller: tabController,
                 tabs: const [
                   Tab(text: 'About'),
-                  Tab(text: 'Exercise'),
-                  Tab(text: 'History'),
+                  Tab(text: 'Exercises'),
+                  // Tab(text: 'History'),
                 ],
               ),
             ),
@@ -271,9 +271,9 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen>
                     },
                   ),
                 ),
-                const Center(
-                  child: Text('History'),
-                ),
+                // const Center(
+                //   child: Text('History'),
+                // ),
               ],
             ),
             persistentFooterButtons: [
@@ -293,6 +293,7 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen>
                             context.read<WorkoutBloc>().add(WorkoutStart(template));
                             Navigator.pop(context);
                           },
+                          
                         ),
                         onClose: () {},
                       );

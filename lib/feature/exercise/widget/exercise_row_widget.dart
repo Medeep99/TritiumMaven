@@ -6,7 +6,7 @@ class ExerciseRowWidget {
 
   static Row build({
     required Widget set,
-    required Widget previous,
+    Widget? previous,
     required List<Widget> options,
     Widget? rpe,
     Widget? checkbox,

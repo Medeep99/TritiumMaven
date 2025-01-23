@@ -154,7 +154,7 @@ class _$MavenDatabase extends MavenDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `program` (`id` INTEGER, `name` TEXT NOT NULL, `timestamp` TEXT NOT NULL, `weeks` INTEGER NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `program_exercise_group` (`program_template_id` INTEGER NOT NULL, `id` INTEGER, `timer` INTEGER NOT NULL, `weight_unit` INTEGER, `distance_unit` INTEGER, `exercise_id` INTEGER NOT NULL, `bar_id` INTEGER, `routine_id` INTEGER, FOREIGN KEY (`bar_id`) REFERENCES `bar` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY (`exercise_id`) REFERENCES `exercise` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY (`program_template_id`) REFERENCES `program_template` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `program_exercise_group` (`program_template_id` INTEGER NOT NULL, `notes` TEXT NOT NULL, `sets` TEXT NOT NULL, `id` INTEGER, `timer` INTEGER NOT NULL, `weight_unit` INTEGER, `distance_unit` INTEGER, `exercise_id` INTEGER NOT NULL, `bar_id` INTEGER, `routine_id` INTEGER, FOREIGN KEY (`bar_id`) REFERENCES `bar` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY (`exercise_id`) REFERENCES `exercise` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY (`program_template_id`) REFERENCES `program_template` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `program_folder` (`id` INTEGER, `order` INTEGER NOT NULL, `program_id` INTEGER NOT NULL, FOREIGN KEY (`program_id`) REFERENCES `program` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE, PRIMARY KEY (`id`))');
         await database.execute(
@@ -172,7 +172,7 @@ class _$MavenDatabase extends MavenDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `template_data` (`id` INTEGER, `sort` INTEGER NOT NULL, `routine_id` INTEGER NOT NULL, FOREIGN KEY (`routine_id`) REFERENCES `routine` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE, PRIMARY KEY (`id`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `user` (`id` INTEGER NOT NULL, `username` TEXT NOT NULL, `description` TEXT NOT NULL, `gender` INTEGER NOT NULL, `height` REAL NOT NULL, `age` INTEGER NOT NULL, `created_at` TEXT NOT NULL, `picture` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `user` (`id` INTEGER NOT NULL, `username` TEXT NOT NULL, `description` TEXT NOT NULL, `gender` INTEGER, `height` REAL NOT NULL, `age` INTEGER NOT NULL, `created_at` TEXT NOT NULL, `picture` TEXT NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `import` (`id` INTEGER, `timestamp` TEXT NOT NULL, `transfer_source` INTEGER NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
@@ -1196,6 +1196,8 @@ class _$ProgramExerciseGroupDao extends ProgramExerciseGroupDao {
             'program_exercise_group',
             (ProgramExerciseGroup item) => <String, Object?>{
                   'program_template_id': item.programTemplateId,
+                  'notes': _noteListConverter.encode(item.notes),
+                  'sets': _exerciseSetListConverter.encode(item.sets),
                   'id': item.id,
                   'timer': _timedConverter.encode(item.timer),
                   'weight_unit': item.weightUnit?.index,
@@ -1210,6 +1212,8 @@ class _$ProgramExerciseGroupDao extends ProgramExerciseGroupDao {
             ['id'],
             (ProgramExerciseGroup item) => <String, Object?>{
                   'program_template_id': item.programTemplateId,
+                  'notes': _noteListConverter.encode(item.notes),
+                  'sets': _exerciseSetListConverter.encode(item.sets),
                   'id': item.id,
                   'timer': _timedConverter.encode(item.timer),
                   'weight_unit': item.weightUnit?.index,
@@ -1224,6 +1228,8 @@ class _$ProgramExerciseGroupDao extends ProgramExerciseGroupDao {
             ['id'],
             (ProgramExerciseGroup item) => <String, Object?>{
                   'program_template_id': item.programTemplateId,
+                  'notes': _noteListConverter.encode(item.notes),
+                  'sets': _exerciseSetListConverter.encode(item.sets),
                   'id': item.id,
                   'timer': _timedConverter.encode(item.timer),
                   'weight_unit': item.weightUnit?.index,
@@ -2177,7 +2183,7 @@ class _$UserDao extends UserDao {
                   'id': item.id,
                   'username': item.username,
                   'description': item.description,
-                  'gender': item.gender.index,
+                  'gender': item.gender?.index,
                   'height': item.height,
                   'age': item.age,
                   'created_at': _dateTimeConverter.encode(item.createdAt),
@@ -2191,21 +2197,7 @@ class _$UserDao extends UserDao {
                   'id': item.id,
                   'username': item.username,
                   'description': item.description,
-                  'gender': item.gender.index,
-                  'height': item.height,
-                  'age': item.age,
-                  'created_at': _dateTimeConverter.encode(item.createdAt),
-                  'picture': item.picture
-                }),
-        _userDeletionAdapter = DeletionAdapter(
-            database,
-            'user',
-            ['id'],
-            (User item) => <String, Object?>{
-                  'id': item.id,
-                  'username': item.username,
-                  'description': item.description,
-                  'gender': item.gender.index,
+                  'gender': item.gender?.index,
                   'height': item.height,
                   'age': item.age,
                   'created_at': _dateTimeConverter.encode(item.createdAt),
@@ -2222,21 +2214,64 @@ class _$UserDao extends UserDao {
 
   final UpdateAdapter<User> _userUpdateAdapter;
 
-  final DeletionAdapter<User> _userDeletionAdapter;
-
   @override
-  Future<User?> get(int id) async {
-    return _queryAdapter.query('SELECT * FROM user WHERE id = ?1',
+  Future<User?> findByName(String name) async {
+    return _queryAdapter.query('SELECT * FROM user WHERE name = ?1',
         mapper: (Map<String, Object?> row) => User(
             id: row['id'] as int,
             username: row['username'] as String,
             description: row['description'] as String,
-            gender: Gender.values[row['gender'] as int],
+            gender: row['gender'] == null
+                ? null
+                : Gender.values[row['gender'] as int],
             height: row['height'] as double,
             age: row['age'] as int,
             createdAt: _dateTimeConverter.decode(row['created_at'] as String),
             picture: row['picture'] as String),
-        arguments: [id]);
+        arguments: [name]);
+  }
+
+  @override
+  Future<int?> countUsers() async {
+    return _queryAdapter.query('SELECT COUNT(id) FROM user',
+        mapper: (Map<String, Object?> row) => row.values.first as int);
+  }
+
+  @override
+  Future<List<User>> getAllUsers() async {
+    return _queryAdapter.queryList('SELECT * FROM user',
+        mapper: (Map<String, Object?> row) => User(
+            id: row['id'] as int,
+            username: row['username'] as String,
+            description: row['description'] as String,
+            gender: row['gender'] == null
+                ? null
+                : Gender.values[row['gender'] as int],
+            height: row['height'] as double,
+            age: row['age'] as int,
+            createdAt: _dateTimeConverter.decode(row['created_at'] as String),
+            picture: row['picture'] as String));
+  }
+
+  @override
+  Future<User?> get() async {
+    return _queryAdapter.query('SELECT * FROM user',
+        mapper: (Map<String, Object?> row) => User(
+            id: row['id'] as int,
+            username: row['username'] as String,
+            description: row['description'] as String,
+            gender: row['gender'] == null
+                ? null
+                : Gender.values[row['gender'] as int],
+            height: row['height'] as double,
+            age: row['age'] as int,
+            createdAt: _dateTimeConverter.decode(row['created_at'] as String),
+            picture: row['picture'] as String));
+  }
+
+  @override
+  Future<void> remove() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM user');
   }
 
   @override
@@ -2249,11 +2284,6 @@ class _$UserDao extends UserDao {
   Future<int> modify(User user) {
     return _userUpdateAdapter.updateAndReturnChangedRows(
         user, OnConflictStrategy.abort);
-  }
-
-  @override
-  Future<int> remove(User user) {
-    return _userDeletionAdapter.deleteAndReturnChangedRows(user);
   }
 }
 
@@ -2800,6 +2830,8 @@ class _$AppThemeColorDao extends AppThemeColorDao {
 }
 
 // ignore_for_file: unused_element
+final _exerciseSetListConverter = ExerciseSetListConverter();
+final _noteListConverter = NoteListConverter();
 final _dateTimeConverter = DateTimeConverter();
 final _colorConverter = ColorConverter();
 final _timedConverter = TimedConverter();

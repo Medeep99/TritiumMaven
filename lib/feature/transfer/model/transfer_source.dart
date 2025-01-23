@@ -11,6 +11,7 @@ enum TransferSource {
         return 'assets/images/strong.png';
       case TransferSource.hevy:
         return 'assets/images/hevy.png';
+
     }
   }
 }

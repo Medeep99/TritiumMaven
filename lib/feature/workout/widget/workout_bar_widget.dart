@@ -206,6 +206,7 @@ class WorkoutBarWidget extends StatelessWidget {
                     context
                         .read<WorkoutBloc>()
                         .add(WorkoutFinish(workout: workout));
+                      print(workout.routine.timestamp);
                   },
                   height: 40,
                   width: 84,

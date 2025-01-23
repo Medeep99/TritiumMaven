@@ -14,6 +14,7 @@ class SessionAboutView extends StatelessWidget {
   }) : super(key: key);
 
   final Session session;
+  
   @override
   Widget build(BuildContext context) {
     return ListView(

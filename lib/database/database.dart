@@ -2,7 +2,11 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:floor/floor.dart';
+import 'package:flutter/material.dart';
+import 'package:maven/database/converter/exerciseSetDto_converter.dart';
+import 'package:maven/database/converter/noteList_converter.dart';
 import 'package:maven/feature/transfer/data/data.dart';
+import 'package:maven/feature/user/screen/user_setup_screen.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import '../feature/theme/theme.dart';
@@ -48,6 +52,8 @@ part 'database.g.dart';
   ],
 )
 @TypeConverters([
+  ExerciseSetListConverter,
+  NoteListConverter,
   DateTimeConverter,
   ColorConverter,
   TimedConverter,
@@ -80,10 +86,18 @@ abstract class MavenDatabase extends FloorDatabase {
   AppThemeColorDao get themeColorDao;
 
   static bool _isFirstTime = false;
+  bool get isFirstTime => _isFirstTime;
+  static changeFirstTimeForNewUser (){
+    _isFirstTime=true;
+  }
+  void deleteMyDatabase(){
+    const String dbName = 'MavenTritium.db';
+     sqflite.deleteDatabase(dbName);
+  }
 
   static final Callback _callback = Callback(
     onCreate: (database, version) {
-      _isFirstTime = false;
+      _isFirstTime = true;
     },
     onOpen: (database) {},
     onUpgrade: (database, startVersion, endVersion) {},
@@ -91,13 +105,15 @@ abstract class MavenDatabase extends FloorDatabase {
   
   static Future<MavenDatabase> initialize() async {
     MavenDatabase db = await $FloorMavenDatabase
-        .databaseBuilder('maven_db_1.db')
+        .databaseBuilder('randi.db')
         .addCallback(_callback)
         .build();
     if (_isFirstTime) {
+      
       db.settingsDao.add(const Settings.empty());
       db.plateDao.addAll(getDefaultPlates());
       db.barDao.addAll(getDefaultBars());
+      
       for (AppTheme theme in getDefaultAppThemes) {
         db.themeDao.add(theme);
         db.themeColorDao.add(theme.option.color);
@@ -108,9 +124,12 @@ abstract class MavenDatabase extends FloorDatabase {
           db.exerciseFieldDao.add(field.copyWith(
             exerciseId: exerciseId,
           ));
+          
         }
-      }
+      } 
+      //create a code to navigate to setup screen here
     }
     return db;
   }
+
 }

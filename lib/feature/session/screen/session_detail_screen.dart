@@ -40,6 +40,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
         } else if (state.status.isLoaded) {
           late Session session;
 
+
           try {
             session = state.sessions.firstWhere((element) => element.routine.id == widget.session.routine.id);
           } catch (e) {

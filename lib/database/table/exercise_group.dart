@@ -94,7 +94,7 @@ class BaseExerciseGroup extends Equatable {
       routineId: routineId,
     );
   }*/
-
+// final List <Note> notes;
   @override
   List<Object?> get props => [
         id,

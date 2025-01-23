@@ -1,3 +1,4 @@
+
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'debug/screen/design_tool_widget.dart';
 import 'feature/app/screen/app_screen.dart';
 import 'feature/equipment/equipment.dart';
 import 'feature/exercise/exercise.dart';
-import 'feature/program/program.dart';
 import 'feature/routine/service/service.dart';
 import 'feature/session/session.dart';
 import 'feature/settings/settings.dart';
@@ -17,30 +17,22 @@ import 'feature/template/template.dart';
 import 'feature/theme/theme.dart';
 import 'feature/transfer/transfer.dart';
 import 'feature/user/user.dart';
+import 'feature/user/screen/user_setup_screen.dart'; // Import UserSetupScreen
 import 'feature/workout/workout.dart';
 import 'generated/l10n.dart';
 
-void main() async {
+void main( ) async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  
+  
   final MavenDatabase db = await MavenDatabase.initialize();
 
-/*int routineId = await db.routineDao.add(Routine(
-    name: 'Session',
-    note: '',
-    timestamp: DateTime.now().subtract(const Duration(days: 7)),
-    type: RoutineType.session,
-  ));
-
-  db.sessionDataDao.add(SessionData(
-    timeElapsed: const Timed.zero(),
-    routineId: routineId
-  ));*/
-
-  runApp(
+  runApp( 
     Main(
+      
       db: db,
     ),
+    
   );
 }
 
@@ -101,32 +93,24 @@ class Main extends StatelessWidget {
                 )..add(const ExerciseInitialize())),
         BlocProvider(
             create: (context) => TemplateBloc(
-              databaseService: databaseService,
+                  databaseService: databaseService,
                   routineService: routineService,
                 )..add(const TemplateInitialize())),
         BlocProvider(
             create: (context) => ThemeBloc(
-              themeDao: db.themeDao,
+                  themeDao: db.themeDao,
                   themeColorDao: db.themeColorDao,
                   settingDao: db.settingsDao,
                 )..add(const ThemeInitialize())),
         BlocProvider(
             create: (context) => WorkoutBloc(
-              databaseService: databaseService,
+                  databaseService: databaseService,
                   routineService: routineService,
                 )..add(const WorkoutInitialize())),
         BlocProvider(
             create: (context) => EquipmentBloc(
-              equipmentService: equipmentService,
+                  equipmentService: equipmentService,
                 )..add(const EquipmentInitialize())),
-        BlocProvider(
-            create: (context) => ProgramBloc(
-                  exerciseDao: db.exerciseDao,
-                  programDao: db.programDao,
-                  programFolderDao: db.programFolderDao,
-                  programTemplateDao: db.programTemplateDao,
-                  programExerciseGroupDao: db.programExerciseGroupDao,
-                )..add(const ProgramInitialize())),
         BlocProvider(
             create: (context) => SessionBloc(
                   routineService: routineService,
@@ -138,6 +122,7 @@ class Main extends StatelessWidget {
         BlocProvider(
             create: (context) => UserBloc(
                   userDao: db.userDao,
+                  database : db,
                 )..add(const UserInitialize())),
         BlocProvider(
             create: (context) => TransferBloc(
@@ -145,49 +130,72 @@ class Main extends StatelessWidget {
                   routineService: routineService,
                 )..add(const TransferInitialize())),
       ],
-      child: BlocBuilder<SettingsBloc, SettingsState>(
-        builder: (context, state) {
-          if (state.status.isLoading) {
+      child: FutureBuilder<bool>(
+        future: db.userDao.isFirstLaunch(), // Check if first launch
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state.status.isLoaded) {
-            return SettingsProvider(
-              settings: state.settings!,
-              child: ThemeProvider(
-                useSystemTheme: state.settings!.useSystemDefaultTheme,
-                child: Builder(
-                  builder: (context) {
-                    return DynamicColorBuilder(
-                      builder: (lightDynamic, darkDynamic) {
-                        return MaterialApp(
-                          theme: InheritedThemeWidget.of(context).theme.data,
-                          title: 'Maven',
-                          localizationsDelegates: const [
-                            S.delegate,
-                            GlobalMaterialLocalizations.delegate,
-                            GlobalWidgetsLocalizations.delegate,
-                            GlobalCupertinoLocalizations.delegate,
-                          ],
-                          locale: state.settings!.locale,
-                          supportedLocales: S.delegate.supportedLocales,
-                          home: const Stack(children: [
-                            Maven(),
-                            Visibility(
-                              visible: kDebugMode,
-                              child: DesignToolWidget(),
-                            ),
-                          ]),
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          }
+
+          final isFirstLaunch = snapshot.data ?? true;
+
+          return BlocBuilder<SettingsBloc, SettingsState>(
+            builder: (context, state) {
+              if (state.status.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state.status.isLoaded) {
+                return SettingsProvider(
+                  settings: state.settings!,
+                  child: ThemeProvider(
+                    useSystemTheme: state.settings!.useSystemDefaultTheme,
+                    child: Builder(
+                      builder: (context) {
+                        return DynamicColorBuilder(
+                          builder: (lightDynamic, darkDynamic) {
+                            return MaterialApp(
+                              theme: InheritedThemeWidget.of(context).theme.data,
+                              title: 'Maven',
+                              localizationsDelegates: const [
+                                S.delegate,
+                                GlobalMaterialLocalizations.delegate,
+                                GlobalWidgetsLocalizations.delegate,
+                                GlobalCupertinoLocalizations.delegate,
+                              ],
+                              locale: state.settings!.locale,
+                              supportedLocales: S.delegate.supportedLocales,
+                              home: isFirstLaunch
+                                  ? UserSetupScreen() // First-time setup screen
+                                  : const Stack(
+                                      children: [
+                                        Maven(),
+                                        Visibility(
+                                          visible: kDebugMode,
+                                          child: DesignToolWidget(),
+                                        ),
+                                      ],
+                                    ),
+                            );
+                          },
                         );
                       },
-                    );
-                  },
-                ),
-              ),
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
+                    ),
+                  ),
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          );
         },
       ),
     );
@@ -195,8 +203,6 @@ class Main extends StatelessWidget {
 }
 
 class CustomScrollBehavior extends ScrollBehavior {
-  // TODO: Give user option to change this.
-  // scrollBehavior: CustomScrollBehavior(),
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {
     return const BouncingScrollPhysics();

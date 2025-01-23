@@ -27,8 +27,8 @@ class Settings extends Equatable {
           id: 1,
           locale: const Locale('en', 'US'),
           themeId: 1,
-          unit: Unit.imperial,
-          sessionWeeklyGoal: 3,
+          unit: Unit.metric,
+          sessionWeeklyGoal: 0,
           useSystemDefaultTheme: true,
           useDynamicColor: true,
         );

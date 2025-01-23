@@ -28,6 +28,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   late final ScrollController scrollController;
   late Workout workout;
   late ExerciseTimerController timerController;
+  int elapsedTimeInSeconds = 0;
 
   bool isReordering = false;
 
@@ -130,12 +131,14 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                           stream: Stream.periodic(const Duration(seconds: 1)),
                           builder: (BuildContext context,
                               AsyncSnapshot<dynamic> snapshot) {
+                              elapsedTimeInSeconds++;
                             return Text(
                               workoutDuration(workout.routine.timestamp),
                               style: T(context).textStyle.labelSmall,
                             );
                           },
                         )
+
                       ],
                     ),
                   ),

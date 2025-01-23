@@ -3,7 +3,6 @@ import 'package:copy_with_extension/copy_with_extension.dart';
 import '../../../common/common.dart';
 import '../../../database/database.dart';
 import '../exercise.dart';
-
 part 'exercise_group_dto.g.dart';
 
 @CopyWith()

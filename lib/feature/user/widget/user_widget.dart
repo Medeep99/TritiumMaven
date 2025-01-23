@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maven/common/common.dart';
 import 'package:maven/feature/user/screen/user_edit_screen.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../../../database/database.dart';
 import '../../theme/theme.dart';
@@ -17,6 +18,7 @@ class UserWidget extends StatefulWidget {
 }
 
 class _UserWidgetState extends State<UserWidget> {
+  late MavenDatabase database;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
@@ -59,7 +61,10 @@ class _UserWidgetState extends State<UserWidget> {
                         child: CircleAvatar(
                           minRadius: 30,
                           maxRadius: 30,
-                          child: SvgPicture.string(user.picture),
+                          child: Image.asset(
+  user.picture,
+  fit: BoxFit.cover, // Adjust fit as needed
+),
                         ),
                       ),
                       const SizedBox(width: 24),

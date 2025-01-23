@@ -1,4 +1,5 @@
 import 'package:floor/floor.dart';
+import 'package:maven/feature/exercise/model/exercise_group_dto.dart';
 
 import '../../common/model/model.dart';
 import '../database.dart';
@@ -27,7 +28,7 @@ import '../database.dart';
     ),
   ],
 )
-class ProgramExerciseGroup extends BaseExerciseGroup {
+class ProgramExerciseGroup extends ExerciseGroupDto {
   const ProgramExerciseGroup({
     super.id,
     required super.timer,

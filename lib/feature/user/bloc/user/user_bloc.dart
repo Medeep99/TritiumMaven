@@ -83,7 +83,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   final UserDao userDao;
-  final MavenDatabase database;
+  final TritiumDatabase database;
 
   // Initialize the user by checking if data exists
   Future<void> _initialize(UserInitialize event, Emitter<UserState> emit) async {

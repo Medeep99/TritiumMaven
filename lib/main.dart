@@ -25,7 +25,7 @@ void main( ) async {
   WidgetsFlutterBinding.ensureInitialized();
   
   
-  final MavenDatabase db = await MavenDatabase.initialize();
+  final TritiumDatabase db = await TritiumDatabase.initialize();
 
   runApp( 
     Main(
@@ -42,7 +42,7 @@ class Main extends StatelessWidget {
     required this.db,
   });
 
-  final MavenDatabase db;
+  final TritiumDatabase db;
 
   @override
   Widget build(BuildContext context) {

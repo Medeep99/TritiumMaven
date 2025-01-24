@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maven/common/model/timed.dart';
@@ -16,7 +18,8 @@ import 'package:maven/feature/transfer/model/transfer_source.dart';
 
 void generateMockWorkoutData(BuildContext context, int goal) {
   final List<String> daysOfWeek = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+    
+   'Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
   ];
 
   switch (goal) {
@@ -29,7 +32,7 @@ void generateMockWorkoutData(BuildContext context, int goal) {
       break;
 
     case 1:
-      generateFullBodyWorkout(context, daysOfWeek[0]); // Monday
+      generateFullBodyWorkout(context, daysOfWeek[2]); // Monday
       break;
 
     case 2:
@@ -41,7 +44,7 @@ void generateMockWorkoutData(BuildContext context, int goal) {
       break;
 
     case 5:
-      generateUpperLowerLegSplit(context);
+      generateUpperLowerFullBodySplit(context);
       break;
 
     default:
@@ -49,7 +52,85 @@ void generateMockWorkoutData(BuildContext context, int goal) {
   }
 }
 
-// Function to generate PPL workout templates for 3 or 6 days
+
+
+
+//Functions to generate splits
+void generateUpperLowerSplit(BuildContext context, List<String> days) {
+  final List<String> splitNames = ['Upper', 'Lower'];
+  final List<List<Exercise>> exerciseGroups = [_getUpperExercises(), _getLowerExercises()];
+
+  for (int i = 0; i < days.length; i++) {
+    final routine = Routine(
+      id: i + 1,
+      name: '${days[i]} ${splitNames[i % 2]} Workout',
+      note: '${splitNames[i % 2]} body workout on ${days[i]}.',
+      timestamp: DateTime.now(),
+      type: RoutineType.template,
+    );
+
+    final exerciseList = ExerciseList();
+    for (var exercise in exerciseGroups[i % 2]) {
+      exerciseList.addExerciseGroup(exercise);
+      exerciseList.addExerciseSet(-1);
+    }
+
+    context.read<TemplateBloc>().add(TemplateCreate(routine: routine, exerciseList: exerciseList));
+    print('Routine created: ${routine.name} with ${exerciseList.getLength()} exercises.');
+  }
+}
+
+void generateCustomWorkout(BuildContext context, int goal, List<String> daysOfWeek) {
+  for (int i = 0; i < goal; i++) {
+    final routine = Routine(
+      id: i + 1,
+      name: '${daysOfWeek[i % 7]} Workout',
+      note: 'Workout plan for ${daysOfWeek[i % 7]}',
+      timestamp: DateTime.now(),
+      type: RoutineType.template,
+    );
+
+    final exerciseList = ExerciseList();
+    for (var exercise in _getFullBodyExercises()) {
+      exerciseList.addExerciseGroup(exercise);
+      exerciseList.addExerciseSet(-1);
+    }
+
+    context.read<TemplateBloc>().add(TemplateCreate(routine: routine, exerciseList: exerciseList));
+    print('Routine created: ${routine.name} with ${exerciseList.getLength()} exercises.');
+  }
+}
+
+void generateUpperLowerFullBodySplit(BuildContext context) {
+  final List<String> days = ['Monday', 'Wednesday', 'Friday', 'Saturday', 'Sunday'];
+  final List<String> routineNames = ['Upper', 'Lower', 'Full Body'];
+
+  final List<List<Exercise>> exerciseGroups = [
+    _getUpperExercises(),
+    _getLowerExercises(),
+    _getFullBodyExercises()
+  ];
+
+  for (int i = 0; i < days.length; i++) {
+    final routine = Routine(
+      id: i + 1,
+      name: '${days[i]} ${routineNames[i % 3]} Workout',
+      note: '${routineNames[i % 3]} body workout on ${days[i]}.',
+      timestamp: DateTime.now(),
+      type: RoutineType.template,
+    );
+
+    final exerciseList = ExerciseList();
+    for (var exercise in exerciseGroups[i % 3]) {
+      exerciseList.addExerciseGroup(exercise);
+      exerciseList.addExerciseSet(-1);
+    }
+
+    context.read<TemplateBloc>().add(TemplateCreate(routine: routine, exerciseList: exerciseList));
+    print('Routine created: ${routine.name} with ${exerciseList.getLength()} exercises.');
+  }
+}
+
 void generatePPLTemplate(BuildContext context, {bool isTwice = false}) {
   final List<String> days = isTwice
       ? ['Sunday', 'Monday', 'Tuesday', 'Thursday', 'Friday', 'Saturday']
@@ -67,7 +148,7 @@ void generatePPLTemplate(BuildContext context, {bool isTwice = false}) {
     final routine = Routine(
       id: i + 1,
       name: '${days[i]} ${routineNames[i % 3]} Workout',
-      note: 'Sample note for ${routineNames[i % 3]} on ${days[i]}.',
+      note: 'Workout for ${routineNames[i % 3]} on ${days[i]}.',
       timestamp: DateTime.now(),
       type: RoutineType.template,
     );
@@ -75,7 +156,7 @@ void generatePPLTemplate(BuildContext context, {bool isTwice = false}) {
     final exerciseList = ExerciseList();
     for (var exercise in exerciseGroups[i % 3]) {
       exerciseList.addExerciseGroup(exercise);
-      exerciseList.addExerciseSet(0);
+      exerciseList.addExerciseSet(-1);
     }
 
     context.read<TemplateBloc>().add(TemplateCreate(routine: routine, exerciseList: exerciseList));
@@ -83,12 +164,11 @@ void generatePPLTemplate(BuildContext context, {bool isTwice = false}) {
   }
 }
 
-// Function to generate Full-Body Workout
 void generateFullBodyWorkout(BuildContext context, String day) {
   final routine = Routine(
     id: 1,
     name: '$day Full Body Workout',
-    note: 'Comprehensive full-body workout on $day.',
+    note: 'Comprehensive full-body workout.',
     timestamp: DateTime.now(),
     type: RoutineType.template,
   );
@@ -96,197 +176,140 @@ void generateFullBodyWorkout(BuildContext context, String day) {
   final exerciseList = ExerciseList();
   for (var exercise in _getFullBodyExercises()) {
     exerciseList.addExerciseGroup(exercise);
-    exerciseList.addExerciseSet(0);
+    exerciseList.addExerciseSet(-1);
+    
   }
 
   context.read<TemplateBloc>().add(TemplateCreate(routine: routine, exerciseList: exerciseList));
   print('Routine created: ${routine.name} with ${exerciseList.getLength()} exercises.');
 }
 
-// Function to generate Upper-Lower split
-void generateUpperLowerSplit(BuildContext context, List<String> days) {
-  final List<String> splitNames = ['Upper', 'Lower'];
-  final List<List<Exercise>> exerciseGroups = [_getUpperExercises(), _getLowerExercises()];
 
-  for (int i = 0; i < days.length; i++) {
-    final routine = Routine(
-      id: i + 1,
-      name: '${days[i]} ${splitNames[i % 2]} Workout',
-      note: '${splitNames[i % 2]} body workout on ${days[i]}.',
-      timestamp: DateTime.now(),
-      type: RoutineType.template,
-    );
-
-    final exerciseList = ExerciseList();
-    for (var exercise in exerciseGroups[i % 2]) {
-      exerciseList.addExerciseGroup(exercise);
-      exerciseList.addExerciseSet(0);
-    }
-
-    context.read<TemplateBloc>().add(TemplateCreate(routine: routine, exerciseList: exerciseList));
-    print('Routine created: ${routine.name} with ${exerciseList.getLength()} exercises.');
-  }
-}
-
-// Function to generate Upper-Lower-Leg split for 5 days
-void generateUpperLowerLegSplit(BuildContext context) {
-  final List<String> days = ['Monday', 'Wednesday', 'Friday', 'Saturday', 'Sunday'];
-  final List<String> routineNames = ['Upper', 'Lower', 'Legs'];
-
-  final List<List<Exercise>> exerciseGroups = [
-    _getUpperExercises(),
-    _getLowerExercises(),
-    _getLegExercises()
-  ];
-
-  for (int i = 0; i < days.length; i++) {
-    final routine = Routine(
-      id: i + 1,
-      name: '${days[i]} ${routineNames[i % 3]} Workout',
-      note: '${routineNames[i % 3]} body workout on ${days[i]}.',
-      timestamp: DateTime.now(),
-      type: RoutineType.template,
-    );
-
-    final exerciseList = ExerciseList();
-    for (var exercise in exerciseGroups[i % 3]) {
-      exerciseList.addExerciseGroup(exercise);
-      exerciseList.addExerciseSet(0);
-    }
-
-    context.read<TemplateBloc>().add(TemplateCreate(routine: routine, exerciseList: exerciseList));
-    print('Routine created: ${routine.name} with ${exerciseList.getLength()} exercises.');
-  }
-}
-
-// Function to generate custom workout plans
-void generateCustomWorkout(BuildContext context, int goal, List<String> daysOfWeek) {
-  for (int i = 0; i < goal; i++) {
-    final routine = Routine(
-      id: i + 1,
-      name: '${daysOfWeek[i % 7]} Workout',
-      note: 'Workout plan for ${daysOfWeek[i % 7]}',
-      timestamp: DateTime.now(),
-      type: RoutineType.template,
-    );
-
-    final exerciseList = ExerciseList();
-    for (var exercise in _getFullBodyExercises()) {
-      exerciseList.addExerciseGroup(exercise);
-      exerciseList.addExerciseSet(0);
-    }
-
-    context.read<TemplateBloc>().add(TemplateCreate(routine: routine, exerciseList: exerciseList));
-    print('Routine created: ${routine.name} with ${exerciseList.getLength()} exercises.');
-  }
-}
-
-// Exercise data generators
-List<Exercise> _getPushExercises() => [
-    const Exercise(
-      id: 1,
-      name: 'Bench Press',
-      muscle: Muscle.pectoralisMajor,
-      muscleGroup: MuscleGroup.chest,
-      equipment: Equipment.barbell,
-      videoPath: '',
-      timer: Timed.zero(),
-    ),
-    const Exercise(
-      id: 2,
-      name: 'Shoulder Press (Dumbbell)',
-      muscle: Muscle.deltoid,
-      muscleGroup: MuscleGroup.shoulders,
-      equipment: Equipment.dumbbell,
-      videoPath: '',
-      timer: Timed.zero(),
-    ),
-    const Exercise(
-      id: 3,
-      name: 'Triceps Dips',
-      muscle: Muscle.tricepsBrachii,
-      muscleGroup: MuscleGroup.arms,
-      equipment: Equipment.bodyWeight,
-      videoPath: '',
-      timer: Timed.zero(),
-    ),
-  ];
-
-List<Exercise> _getPullExercises() => [
-    const Exercise(
-      id: 4,
-      name: 'Pull-Ups',
-      muscle: Muscle.latissimusDorsi,
-      muscleGroup: MuscleGroup.back,
-      equipment: Equipment.bodyWeight,
-      videoPath: '',
-      timer: Timed.zero(),
-    ),
-    const Exercise(
-      id: 5,
-      name: 'Barbell Rows',
-      muscle: Muscle.rhomboids,
-      muscleGroup: MuscleGroup.back,
-      equipment: Equipment.barbell,
-      videoPath: '',
-      timer: Timed.zero(),
-    ),
-    const Exercise(
-      id: 6,
-      name: 'Bicep Curls (Dumbbell)',
-      muscle: Muscle.bicepsBrachii,
-      muscleGroup: MuscleGroup.arms,
-      equipment: Equipment.dumbbell,
-      videoPath: '',
-      timer: Timed.zero(),
-    ),
-  ];
-
-List<Exercise> _getLegExercises() => [
-    const Exercise(
-      id: 7,
-      name: 'Squats',
-      muscle: Muscle.quadriceps,
-      muscleGroup: MuscleGroup.legs,
-      equipment: Equipment.barbell,
-      videoPath: '',
-      timer: Timed.zero(),
-    ),
-    const Exercise(
-      id: 8,
-      name: 'Leg Press',
-      muscle: Muscle.hamstrings,
-      muscleGroup: MuscleGroup.legs,
-      equipment: Equipment.machine,
-      videoPath: '',
-      timer: Timed.zero(),
-    ),
-    const Exercise(
-      id: 9,
-      name: 'Calf Raises',
-      muscle: Muscle.gastrocnemius,
-      muscleGroup: MuscleGroup.legs,
-      equipment: Equipment.machine,
-      videoPath: '',
-      timer: Timed.zero(),
-    ),
-  ];
-
-List<Exercise> _getUpperExercises() => [
-      const Exercise(id: 10, name: 'Incline Bench Press', muscle: Muscle.adductors, muscleGroup: MuscleGroup.legs, equipment: Equipment.barbell, videoPath: '', timer: Timed.zero()),
-    ];
-
-List<Exercise> _getLowerExercises() => [
-      const Exercise(id: 12, name: 'Deadlifts', muscle: Muscle.adductors, muscleGroup: MuscleGroup.legs, equipment: Equipment.barbell, videoPath: '', timer: Timed.zero()),
-    ];
-
-List<Exercise> _getFullBodyExercises() => [
+//best compound and isolation Exercises
+List<Exercise> _getUpperExercises() {
+List <Exercise> compoundExercises = [
 const Exercise(
-    id: 1,
-    name: 'Ab Wheel',
-    muscle: Muscle.iliopsoas,
-    muscleGroup: MuscleGroup.core,
-    equipment: Equipment.wheelRoller,
+    id: 9,
+    name: 'Bench Press (Barbell)',
+    muscle: Muscle.pectoralisMajor,
+    muscleGroup: MuscleGroup.chest,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bench Press (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 135,
+    name: 'Overhead Press (Barbell)',
+    muscle: Muscle.deltoid,
+    muscleGroup: MuscleGroup.shoulders,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      )
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Overhead Press (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 17,
+    name: 'Bent-over Row (Barbell)',
+    muscle: Muscle.latissimusDorsi,
+    muscleGroup: MuscleGroup.back,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bent-over Row (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+   const Exercise(
+    id: 19,
+    name: 'Bent-over Row - Underhand (Barbell)',
+    muscle: Muscle.latissimusDorsi,
+    muscleGroup: MuscleGroup.back,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bent-over Row - Underhand (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+
+];
+List <Exercise> isolationExercises = [
+ const Exercise(
+    id: 38,
+    name: 'Chest Fly (Machine)',
+    muscle: Muscle.pectoralisMajor,
+    muscleGroup: MuscleGroup.chest,
+    equipment: Equipment.machine,
     videoPath: 'VIDEOPATH',
     timer: Timed(
       minute: 1,
@@ -295,18 +318,232 @@ const Exercise(
     weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
         type: ExerciseFieldType.reps,
         exerciseId: -1,
       ),
     ],
     conversions: [
       ExerciseConversion(
+        name: 'Chest Fly (Machine)',
         source: TransferSource.strong,
-        name: 'Ab Wheel',
+      ),
+    ],
+  ),
+const Exercise(
+    id: 70,
+    name: 'Front Raise (Barbell)',
+    muscle: Muscle.deltoid,
+    muscleGroup: MuscleGroup.shoulders,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Front Raise (Barbell)',
+        source: TransferSource.strong,
       ),
     ],
   ),
   const Exercise(
+    id: 21,
+    name: 'Bicep Curl (Cable)',
+    muscle: Muscle.bicepsBrachii,
+    muscleGroup: MuscleGroup.arms,
+    equipment: Equipment.cable,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bicep Curl (Cable)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 31,
+    name: 'Cable Kickback',
+    muscle: Muscle.tricepsBrachii,
+    muscleGroup: MuscleGroup.arms,
+    equipment: Equipment.cable,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Cable Kickback',
+        source: TransferSource.strong,
+      ),
+    ]
+  ),
+  const Exercise(
+    id: 105,
+    name: 'Iso-Lateral Row (Machine)',
+    muscle: Muscle.latissimusDorsi,
+    muscleGroup: MuscleGroup.back,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Iso-Lateral Row (Machine)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+];
+return exercisesSelector(compoundExercises, isolationExercises, 2, 4);
+}
+
+List<Exercise> _getLowerExercises() {
+return _getLegExercises();
+}
+
+List<Exercise> _getPushExercises() {
+  List<Exercise> compoundExercises = [
+const Exercise(
+    id: 9,
+    name: 'Bench Press (Barbell)',
+    muscle: Muscle.pectoralisMajor,
+    muscleGroup: MuscleGroup.chest,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bench Press (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 59,
+    name: 'Decline Bench Press (Barbell)',
+    muscle: Muscle.pectoralisMajor,
+    muscleGroup: MuscleGroup.chest,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Decline Bench Press (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 135,
+    name: 'Overhead Press (Barbell)',
+    muscle: Muscle.deltoid,
+    muscleGroup: MuscleGroup.shoulders,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      )
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Overhead Press (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+   const Exercise(
     id: 2,
     name: 'Arnold Press (Dumbbell)',
     muscle: Muscle.deltoid,
@@ -335,11 +572,554 @@ const Exercise(
       ),
     ],
   ),
-  const Exercise(
-    id: 3,
-    name: 'Around the World',
+  
+  ];
+  List <Exercise> isolationExercises = [
+    const Exercise(
+    id: 38,
+    name: 'Chest Fly (Machine)',
     muscle: Muscle.pectoralisMajor,
     muscleGroup: MuscleGroup.chest,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Chest Fly (Machine)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+
+const Exercise(
+    id: 13,
+    name: 'Bench Press Close Grip (Barbell)',
+    muscle: Muscle.tricepsBrachii,
+    muscleGroup: MuscleGroup.arms,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bench Press Close Grip (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+const Exercise(
+    id: 123,
+    name: 'Lateral Raise (Cable)',
+    muscle: Muscle.deltoid,
+    muscleGroup: MuscleGroup.shoulders,
+    equipment: Equipment.cable,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Lateral Raise (Cable)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 65,
+    name: 'Face Pull (Cable)',
+    muscle: Muscle.deltoid,
+    muscleGroup: MuscleGroup.shoulders,
+    equipment: Equipment.cable,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Face Pull (Cable)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 118,
+    name: 'Lat Pulldown (Machine)',
+    muscle: Muscle.latissimusDorsi,
+    muscleGroup: MuscleGroup.back,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Lat Pulldown (Machine)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+
+ 
+ 
+ ];
+  return exercisesSelector(compoundExercises, isolationExercises, 2, 4);
+}
+
+List<Exercise> _getPullExercises() {
+List <Exercise> compoundExercises = [
+const Exercise(
+    id: 55,
+    name: 'Deadlift (Barbell)',
+    muscle: Muscle.gluteus,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Deadlift (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+   const Exercise(
+    id: 17,
+    name: 'Bent-over Row (Barbell)',
+    muscle: Muscle.latissimusDorsi,
+    muscleGroup: MuscleGroup.back,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bent-over Row (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+   const Exercise(
+    id: 19,
+    name: 'Bent-over Row - Underhand (Barbell)',
+    muscle: Muscle.latissimusDorsi,
+    muscleGroup: MuscleGroup.back,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bent-over Row - Underhand (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+];
+List <Exercise> isolationExercises = [
+  const Exercise(
+    id: 21,
+    name: 'Bicep Curl (Cable)',
+    muscle: Muscle.bicepsBrachii,
+    muscleGroup: MuscleGroup.arms,
+    equipment: Equipment.cable,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bicep Curl (Cable)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 31,
+    name: 'Cable Kickback',
+    muscle: Muscle.tricepsBrachii,
+    muscleGroup: MuscleGroup.arms,
+    equipment: Equipment.cable,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Cable Kickback',
+        source: TransferSource.strong,
+      ),
+    ]
+  ),
+  const Exercise(
+    id: 105,
+    name: 'Iso-Lateral Row (Machine)',
+    muscle: Muscle.latissimusDorsi,
+    muscleGroup: MuscleGroup.back,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Iso-Lateral Row (Machine)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 65,
+    name: 'Face Pull (Cable)',
+    muscle: Muscle.deltoid,
+    muscleGroup: MuscleGroup.shoulders,
+    equipment: Equipment.cable,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Face Pull (Cable)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 118,
+    name: 'Lat Pulldown (Machine)',
+    muscle: Muscle.latissimusDorsi,
+    muscleGroup: MuscleGroup.back,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Lat Pulldown (Machine)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+
+      
+
+
+];
+return exercisesSelector(compoundExercises, isolationExercises, 2, 3);
+}
+
+List<Exercise> _getLegExercises() {
+List<Exercise> compoundExercises = [
+const Exercise(
+    id: 26,
+    name: 'Box Squat (Barbell)',
+    muscle: Muscle.gluteus,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Box Squat (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+const Exercise(
+    id: 127,
+    name: 'Leg Press',
+    muscle: Muscle.quadriceps,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+      second: 0,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Leg Press',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+const Exercise(
+    id: 55,
+    name: 'Deadlift (Barbell)',
+    muscle: Muscle.gluteus,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Deadlift (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+
+];
+List <Exercise> isolationExercises = [
+const Exercise(
+    id: 130,
+    name: 'Lunge (Dumbbell)',
+    muscle: Muscle.quadriceps,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.dumbbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weighted,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Lunge (Dumbbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+ const Exercise(
+    id: 131,
+    name: 'Lying Leg Curl (Machine)',
+    muscle: Muscle.hamstrings,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Lying Leg Curl (Machine)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+ const Exercise(
+    id: 27,
+    name: 'Bulgarian Split Squat (Dumbbell)',
+    muscle: Muscle.quadriceps,
+    muscleGroup: MuscleGroup.legs,
     equipment: Equipment.dumbbell,
     videoPath: 'VIDEOPATH',
     timer: Timed(
@@ -359,23 +1139,22 @@ const Exercise(
     ],
     conversions: [
       ExerciseConversion(
+        name: 'Bulgarian Split Squat (Dumbbell)',
         source: TransferSource.strong,
-        name: 'Around the World',
       ),
     ],
   ),
-  const Exercise(
-    id: 4,
-    name: 'Back Extension',
-    muscle: Muscle.erectorSpinae,
-    muscleGroup: MuscleGroup.back,
-    equipment: Equipment.machine,
+const Exercise(
+    id: 93,
+    name: 'Hip Thrust (Barbell)',
+    muscle: Muscle.gluteus,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.barbell,
     videoPath: 'VIDEOPATH',
     timer: Timed(
-      minute: 1,
-      second: 30,
+      minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -388,9 +1167,394 @@ const Exercise(
     ],
     conversions: [
       ExerciseConversion(
+        name: 'Hip Thrust (Barbell)',
         source: TransferSource.strong,
-        name: 'Back Extension',
       ),
     ],
   ),
-      ];
+ const Exercise(
+    id: 92,
+    name: 'Hip Adductor (Machine)',
+    muscle: Muscle.adductors,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Hip Adductor (Machine)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+];
+return exercisesSelector(compoundExercises, isolationExercises, 2, 3);
+
+}
+
+List<Exercise> _getFullBodyExercises() {
+  
+  List<Exercise> compoundExercises = [
+    const Exercise(
+      id: 26,
+      name: 'Box Squat (Barbell)',
+      muscle: Muscle.gluteus,
+      muscleGroup: MuscleGroup.legs,
+      equipment: Equipment.barbell,
+      videoPath: 'VIDEOPATH',
+      timer: Timed(
+        minute: 3,
+      ),
+      weightUnit: WeightUnit.kilogram,
+      fields: [
+        ExerciseField(
+          type: ExerciseFieldType.weight,
+          exerciseId: -1,
+        ),
+        ExerciseField(
+          type: ExerciseFieldType.reps,
+          exerciseId: -1,
+        ),
+      ],
+      conversions: [
+        ExerciseConversion(
+          name: 'Box Squat (Barbell)',
+          source: TransferSource.strong,
+        ),
+      ],
+    ),
+    const Exercise(
+    id: 55,
+    name: 'Deadlift (Barbell)',
+    muscle: Muscle.gluteus,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Deadlift (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 9,
+    name: 'Bench Press (Barbell)',
+    muscle: Muscle.pectoralisMajor,
+    muscleGroup: MuscleGroup.chest,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bench Press (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 135,
+    name: 'Overhead Press (Barbell)',
+    muscle: Muscle.deltoid,
+    muscleGroup: MuscleGroup.shoulders,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      )
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Overhead Press (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 17,
+    name: 'Bent-over Row (Barbell)',
+    muscle: Muscle.latissimusDorsi,
+    muscleGroup: MuscleGroup.back,
+    equipment: Equipment.barbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 3,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bent-over Row (Barbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+
+  ];
+
+  // List of isolation exercises (remaining exercises)
+  List<Exercise> isolationExercises = [
+     const Exercise(
+    id: 22,
+    name: 'Bicep Curl (Dumbbell)',
+    muscle: Muscle.bicepsBrachii,
+    muscleGroup: MuscleGroup.arms,
+    equipment: Equipment.dumbbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Bicep Curl (Dumbbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+   const Exercise(
+    id: 31,
+    name: 'Cable Kickback',
+    muscle: Muscle.tricepsBrachii,
+    muscleGroup: MuscleGroup.arms,
+    equipment: Equipment.cable,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Cable Kickback',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 124,
+    name: 'Lateral Raise (Dumbbell)',
+    muscle: Muscle.deltoid,
+    muscleGroup: MuscleGroup.shoulders,
+    equipment: Equipment.dumbbell,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Lateral Raise (Dumbbell)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 126,
+    name: 'Leg Extension (Machine)',
+    muscle: Muscle.quadriceps,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Leg Extension (Machine)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 131,
+    name: 'Lying Leg Curl (Machine)',
+    muscle: Muscle.hamstrings,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Lying Leg Curl (Machine)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  const Exercise(
+    id: 91,
+    name: 'Hip Abductor (Machine)',
+    muscle: Muscle.adductors,
+    muscleGroup: MuscleGroup.legs,
+    equipment: Equipment.machine,
+    videoPath: 'VIDEOPATH',
+    timer: Timed(
+      minute: 1,
+      second: 30,
+    ),
+    weightUnit: WeightUnit.kilogram,
+    fields: [
+      ExerciseField(
+        type: ExerciseFieldType.weight,
+        exerciseId: -1,
+      ),
+      ExerciseField(
+        type: ExerciseFieldType.reps,
+        exerciseId: -1,
+      ),
+    ],
+    conversions: [
+      ExerciseConversion(
+        name: 'Hip Abductor (Machine)',
+        source: TransferSource.strong,
+      ),
+    ],
+  ),
+  ];
+  return exercisesSelector(compoundExercises, isolationExercises, 3, 4);
+}
+
+
+//exercise selector
+List<Exercise> exercisesSelector (List <Exercise> compoundExercises, List<Exercise> isolationExercises, int compValue, int isoValue){
+  Random random = Random();
+
+  // Select n compound exercises randomly
+  List<Exercise> selectedCompoundExercises = [];
+  while (selectedCompoundExercises.length < compValue) {
+    Exercise randomCompound = compoundExercises[random.nextInt(compoundExercises.length)];
+    if (!selectedCompoundExercises.contains(randomCompound)) {
+      selectedCompoundExercises.add(randomCompound);
+    }
+  }
+
+  // Select n isolation exercises randomly
+  List<Exercise> selectedIsolationExercises = [];
+  while (selectedIsolationExercises.length < isoValue) {
+    Exercise randomIsolation = isolationExercises[random.nextInt(isolationExercises.length)];
+    if (!selectedIsolationExercises.contains(randomIsolation)) {
+      selectedIsolationExercises.add(randomIsolation);
+    }
+  }
+
+  // Combine selected exercises into one list and return it
+  return selectedCompoundExercises + selectedIsolationExercises;
+}

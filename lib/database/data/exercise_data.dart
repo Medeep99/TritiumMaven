@@ -18,7 +18,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.reps,
@@ -43,7 +43,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -72,7 +72,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -101,7 +101,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -130,7 +130,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -159,7 +159,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -217,7 +217,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weighted,
@@ -245,7 +245,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -273,7 +273,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -302,7 +302,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -330,7 +330,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -358,7 +358,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -386,7 +386,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -415,7 +415,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -467,7 +467,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -496,7 +496,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -524,7 +524,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -553,7 +553,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -582,7 +582,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -611,7 +611,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -640,7 +640,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -693,7 +693,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.reps,
@@ -717,7 +717,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -746,7 +746,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -799,7 +799,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -828,7 +828,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -857,7 +857,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -886,7 +886,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -915,7 +915,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -944,7 +944,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -973,7 +973,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1002,7 +1002,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weighted,
@@ -1031,7 +1031,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.assisted,
@@ -1060,7 +1060,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1089,7 +1089,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.reps,
@@ -1114,7 +1114,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1143,7 +1143,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.reps,
@@ -1168,7 +1168,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1197,7 +1197,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weighted,
@@ -1226,7 +1226,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.assisted,
@@ -1254,7 +1254,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1282,7 +1282,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1311,7 +1311,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1340,7 +1340,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.reps,
@@ -1365,7 +1365,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1394,7 +1394,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1423,7 +1423,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.reps,
@@ -1498,7 +1498,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.reps,
@@ -1522,7 +1522,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1550,7 +1550,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1578,7 +1578,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1606,7 +1606,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1634,7 +1634,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1662,7 +1662,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1690,7 +1690,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1719,7 +1719,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1747,7 +1747,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1802,7 +1802,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1878,7 +1878,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1907,7 +1907,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.reps,
@@ -1932,7 +1932,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1961,7 +1961,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -1990,7 +1990,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2046,7 +2046,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2075,7 +2075,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2104,7 +2104,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2132,7 +2132,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2160,7 +2160,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2188,7 +2188,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2216,7 +2216,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2269,7 +2269,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2298,7 +2298,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2353,7 +2353,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2381,7 +2381,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2507,7 +2507,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2536,7 +2536,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2564,7 +2564,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2593,7 +2593,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.bodyWeight,
@@ -2621,7 +2621,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2649,7 +2649,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2677,7 +2677,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2733,7 +2733,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2762,7 +2762,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2791,7 +2791,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2820,7 +2820,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2876,7 +2876,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2905,7 +2905,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -2978,7 +2978,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3055,7 +3055,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3084,7 +3084,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3215,7 +3215,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3244,7 +3244,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3273,7 +3273,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3302,7 +3302,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3331,7 +3331,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3388,7 +3388,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3417,7 +3417,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3446,7 +3446,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3475,7 +3475,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3504,7 +3504,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 3,
       second: 0,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3533,7 +3533,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 3,
       second: 0,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3589,7 +3589,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weighted,
@@ -3618,7 +3618,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3721,7 +3721,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3750,7 +3750,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3779,7 +3779,7 @@ List<Exercise> getDefaultExercises() => [
       minute: 1,
       second: 30,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3807,7 +3807,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,
@@ -3835,7 +3835,7 @@ List<Exercise> getDefaultExercises() => [
     timer: Timed(
       minute: 3,
     ),
-    weightUnit: WeightUnit.pound,
+    weightUnit: WeightUnit.kilogram,
     fields: [
       ExerciseField(
         type: ExerciseFieldType.weight,

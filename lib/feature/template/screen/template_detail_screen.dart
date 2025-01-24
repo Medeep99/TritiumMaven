@@ -83,13 +83,13 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen>
                             leading: const Icon(Icons.edit_rounded),
                             title: const Text('Edit'),
                           ),
-                          ListTile(
-                            onTap: () {
-                              // TODO: Implement share
-                            },
-                            leading: const Icon(Icons.share_rounded),
-                            title: const Text('Share'),
-                          ),
+                          // ListTile(
+                          //   onTap: () {
+                          //     // TODO: Implement share
+                          //   },
+                          //   leading: const Icon(Icons.share_rounded),
+                          //   title: const Text('Share'),
+                          // ),
                           ListTile(
                             onTap: () {
                               Navigator.pop(context);
@@ -110,9 +110,11 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen>
                                   ),
                                   confirmText: 'Delete',
                                   onSubmit: () {
+                                    
                                     context.read<TemplateBloc>().add(TemplateDelete(
                                           template: template,
                                         ));
+                                        Navigator.pop(context);
                                   },
                                 ),
                                 onClose: () {},
@@ -209,9 +211,11 @@ class _TemplateDetailScreenState extends State<TemplateDetailScreen>
                               children: [
                                 const Text('Est. Duration'),
                                 Text(
-                                  template.duration.toString(),
+                                  
+                                  template.duration.minute.toString()+' minutes',
                                   style: T(context).textStyle.labelSmall,
                                 ),
+                                
                               ],
                             ),
                             TableRow(

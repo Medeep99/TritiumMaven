@@ -20,14 +20,14 @@ class UserEditScreen extends StatefulWidget {
   }) : super(key: key);
 
   final User user;
-  // final MavenDatabase database;
+  // final TritiumDatabase database;
   @override
   State<UserEditScreen> createState() => _UserEditScreenState();
 }
 
 class _UserEditScreenState extends State<UserEditScreen> {
   late User user;
-  late MavenDatabase database;
+  late TritiumDatabase database;
 
   @override
   void initState() {

@@ -6,33 +6,33 @@ part of 'database.dart';
 // FloorGenerator
 // **************************************************************************
 
-abstract class $MavenDatabaseBuilderContract {
+abstract class $TritiumDatabaseBuilderContract {
   /// Adds migrations to the builder.
-  $MavenDatabaseBuilderContract addMigrations(List<Migration> migrations);
+  $TritiumDatabaseBuilderContract addMigrations(List<Migration> migrations);
 
   /// Adds a database [Callback] to the builder.
-  $MavenDatabaseBuilderContract addCallback(Callback callback);
+  $TritiumDatabaseBuilderContract addCallback(Callback callback);
 
   /// Creates the database and initializes it.
-  Future<MavenDatabase> build();
+  Future<TritiumDatabase> build();
 }
 
 // ignore: avoid_classes_with_only_static_members
-class $FloorMavenDatabase {
+class $FloorTritiumDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static $MavenDatabaseBuilderContract databaseBuilder(String name) =>
-      _$MavenDatabaseBuilder(name);
+  static $TritiumDatabaseBuilderContract databaseBuilder(String name) =>
+      _$TritiumDatabaseBuilder(name);
 
   /// Creates a database builder for an in memory database.
   /// Information stored in an in memory database disappears when the process is killed.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static $MavenDatabaseBuilderContract inMemoryDatabaseBuilder() =>
-      _$MavenDatabaseBuilder(null);
+  static $TritiumDatabaseBuilderContract inMemoryDatabaseBuilder() =>
+      _$TritiumDatabaseBuilder(null);
 }
 
-class _$MavenDatabaseBuilder implements $MavenDatabaseBuilderContract {
-  _$MavenDatabaseBuilder(this.name);
+class _$TritiumDatabaseBuilder implements $TritiumDatabaseBuilderContract {
+  _$TritiumDatabaseBuilder(this.name);
 
   final String? name;
 
@@ -41,23 +41,23 @@ class _$MavenDatabaseBuilder implements $MavenDatabaseBuilderContract {
   Callback? _callback;
 
   @override
-  $MavenDatabaseBuilderContract addMigrations(List<Migration> migrations) {
+  $TritiumDatabaseBuilderContract addMigrations(List<Migration> migrations) {
     _migrations.addAll(migrations);
     return this;
   }
 
   @override
-  $MavenDatabaseBuilderContract addCallback(Callback callback) {
+  $TritiumDatabaseBuilderContract addCallback(Callback callback) {
     _callback = callback;
     return this;
   }
 
   @override
-  Future<MavenDatabase> build() async {
+  Future<TritiumDatabase> build() async {
     final path = name != null
         ? await sqfliteDatabaseFactory.getDatabasePath(name!)
         : ':memory:';
-    final database = _$MavenDatabase();
+    final database = _$TritiumDatabase();
     database.database = await database.open(
       path,
       _migrations,
@@ -67,8 +67,8 @@ class _$MavenDatabaseBuilder implements $MavenDatabaseBuilderContract {
   }
 }
 
-class _$MavenDatabase extends MavenDatabase {
-  _$MavenDatabase([StreamController<String>? listener]) {
+class _$TritiumDatabase extends TritiumDatabase {
+  _$TritiumDatabase([StreamController<String>? listener]) {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 

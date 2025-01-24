@@ -18,7 +18,7 @@ class UserWidget extends StatefulWidget {
 }
 
 class _UserWidgetState extends State<UserWidget> {
-  late MavenDatabase database;
+  late TritiumDatabase database;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(

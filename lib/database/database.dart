@@ -61,7 +61,7 @@ part 'database.g.dart';
   SetTypeConverter,
   DurationConverter,
 ])
-abstract class MavenDatabase extends FloorDatabase {
+abstract class TritiumDatabase extends FloorDatabase {
   BarDao get barDao;
   ExerciseDao get exerciseDao;
   ExerciseGroupDao get baseExerciseGroupDao;
@@ -103,8 +103,8 @@ abstract class MavenDatabase extends FloorDatabase {
     onUpgrade: (database, startVersion, endVersion) {},
   );
   
-  static Future<MavenDatabase> initialize() async {
-    MavenDatabase db = await $FloorMavenDatabase
+  static Future<TritiumDatabase> initialize() async {
+    TritiumDatabase db = await $FloorTritiumDatabase
         .databaseBuilder('randi.db')
         .addCallback(_callback)
         .build();

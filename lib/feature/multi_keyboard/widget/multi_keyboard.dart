@@ -120,74 +120,74 @@ class _MultiKeyboardState extends State<MultiKeyboard> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Material(
-                  color: T(context).color.background,
-                  child: InkWell(
-                    onTap: (){
-                      setState(() {
-                        _selectedTab = 0;
-                      });
-                    },
-                    child: SizedBox(
-                      width: 80,
-                      child: Icon(
-                        Icons.history_rounded,
-                        color: _selectedTab == 0
-                            ? null
-                            : T(context).color.onBackground,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              if (Equipment.barbell == widget.equipment &&
-                  widget.data.requiresBar)
-              Expanded(
-                child: Material(
-                  color: T(context).color.background,
-                  child: InkWell(
-                    onTap: (){
-                      setState(() {
-                        _selectedTab = 1;
-                      });
-                    },
-                    child: SizedBox(
-                      width: 80,
-                      child: Icon(
-                        Icons.calculate_outlined,
-                        color: _selectedTab == 1
-                            ? null
-                            : T(context).color.onBackground,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Material(
-                  color: T(context).color.background,
-                  child: InkWell(
-                    onTap: (){
-                      setState(() {
-                        _selectedTab = 2;
-                      });
-                    },
-                    child: SizedBox(
-                      width: 80,
-                      child: Icon(
-                        Icons.numbers_rounded,
-                        color: _selectedTab == 2
-                            ? null
-                            : T(context).color.onBackground,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Expanded(
+              //   child: Material(
+              //     color: T(context).color.background,
+              //     child: InkWell(
+              //       onTap: (){
+              //         setState(() {
+              //           _selectedTab = 0;
+              //         });
+              //       },
+              //       child: SizedBox(
+              //         width: 80,
+              //         child: Icon(
+              //           Icons.history_rounded,
+              //           color: _selectedTab == 0
+              //               ? null
+              //               : T(context).color.onBackground,
+              //           size: 30,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // if (Equipment.barbell == widget.equipment &&
+              //     widget.data.requiresBar)
+              // Expanded(
+              //   child: Material(
+              //     color: T(context).color.background,
+              //     child: InkWell(
+              //       onTap: (){
+              //         setState(() {
+              //           _selectedTab = 1;
+              //         });
+              //       },
+              //       child: SizedBox(
+              //         width: 80,
+              //         child: Icon(
+              //           Icons.calculate_outlined,
+              //           color: _selectedTab == 1
+              //               ? null
+              //               : T(context).color.onBackground,
+              //           size: 30,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // Expanded(
+              //   child: Material(
+              //     color: T(context).color.background,
+              //     child: InkWell(
+              //       onTap: (){
+              //         setState(() {
+              //           _selectedTab = 2;
+              //         });
+              //       },
+              //       child: SizedBox(
+              //         width: 80,
+              //         child: Icon(
+              //           Icons.numbers_rounded,
+              //           color: _selectedTab == 2
+              //               ? null
+              //               : T(context).color.onBackground,
+              //           size: 30,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Expanded(
                 child: Material(
                   color: T(context).color.background,

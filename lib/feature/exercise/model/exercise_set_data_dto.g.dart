@@ -23,9 +23,9 @@ abstract class _$ExerciseSetDataDtoCWProxy {
   /// ````
   ExerciseSetDataDto call({
     int? id,
-    String? value,
-    ExerciseFieldType? fieldType,
-    int? exerciseSetId,
+    String value,
+    ExerciseFieldType fieldType,
+    int exerciseSetId,
   });
 }
 
@@ -68,19 +68,18 @@ class _$ExerciseSetDataDtoCWProxyImpl implements _$ExerciseSetDataDtoCWProxy {
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
           : id as int?,
-      value: value == const $CopyWithPlaceholder() || value == null
+      value: value == const $CopyWithPlaceholder()
           ? _value.value
           // ignore: cast_nullable_to_non_nullable
           : value as String,
-      fieldType: fieldType == const $CopyWithPlaceholder() || fieldType == null
+      fieldType: fieldType == const $CopyWithPlaceholder()
           ? _value.fieldType
           // ignore: cast_nullable_to_non_nullable
           : fieldType as ExerciseFieldType,
-      exerciseSetId:
-          exerciseSetId == const $CopyWithPlaceholder() || exerciseSetId == null
-              ? _value.exerciseSetId
-              // ignore: cast_nullable_to_non_nullable
-              : exerciseSetId as int,
+      exerciseSetId: exerciseSetId == const $CopyWithPlaceholder()
+          ? _value.exerciseSetId
+          // ignore: cast_nullable_to_non_nullable
+          : exerciseSetId as int,
     );
   }
 }

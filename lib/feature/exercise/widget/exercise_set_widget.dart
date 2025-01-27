@@ -123,7 +123,7 @@ class _ExerciseSetWidgetState extends State<ExerciseSetWidget> {
                           widget.set.checked = value!;
                         });
                         widget.onExerciseSetToggled!(
-                          widget.set.copyWith(checked: value),
+                          widget.set.copyWith(checked:value as bool),
                         );
                       }
                     },

@@ -33,14 +33,14 @@ abstract class _$ExerciseGroupDtoCWProxy {
   /// ````
   ExerciseGroupDto call({
     int? id,
-    Timed? timer,
+    Timed timer,
     WeightUnit? weightUnit,
     DistanceUnit? distanceUnit,
-    int? exerciseId,
+    int exerciseId,
     int? barId,
     int? routineId,
-    List<ExerciseSetDto>? sets,
-    List<Note>? notes,
+    List<ExerciseSetDto> sets,
+    List<Note> notes,
   });
 }
 
@@ -103,7 +103,7 @@ class _$ExerciseGroupDtoCWProxyImpl implements _$ExerciseGroupDtoCWProxy {
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
           : id as int?,
-      timer: timer == const $CopyWithPlaceholder() || timer == null
+      timer: timer == const $CopyWithPlaceholder()
           ? _value.timer
           // ignore: cast_nullable_to_non_nullable
           : timer as Timed,
@@ -115,11 +115,10 @@ class _$ExerciseGroupDtoCWProxyImpl implements _$ExerciseGroupDtoCWProxy {
           ? _value.distanceUnit
           // ignore: cast_nullable_to_non_nullable
           : distanceUnit as DistanceUnit?,
-      exerciseId:
-          exerciseId == const $CopyWithPlaceholder() || exerciseId == null
-              ? _value.exerciseId
-              // ignore: cast_nullable_to_non_nullable
-              : exerciseId as int,
+      exerciseId: exerciseId == const $CopyWithPlaceholder()
+          ? _value.exerciseId
+          // ignore: cast_nullable_to_non_nullable
+          : exerciseId as int,
       barId: barId == const $CopyWithPlaceholder()
           ? _value.barId
           // ignore: cast_nullable_to_non_nullable
@@ -128,11 +127,11 @@ class _$ExerciseGroupDtoCWProxyImpl implements _$ExerciseGroupDtoCWProxy {
           ? _value.routineId
           // ignore: cast_nullable_to_non_nullable
           : routineId as int?,
-      sets: sets == const $CopyWithPlaceholder() || sets == null
+      sets: sets == const $CopyWithPlaceholder()
           ? _value.sets
           // ignore: cast_nullable_to_non_nullable
           : sets as List<ExerciseSetDto>,
-      notes: notes == const $CopyWithPlaceholder() || notes == null
+      notes: notes == const $CopyWithPlaceholder()
           ? _value.notes
           // ignore: cast_nullable_to_non_nullable
           : notes as List<Note>,

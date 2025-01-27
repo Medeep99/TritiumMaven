@@ -31,7 +31,7 @@ abstract class UserDao {
   // Check if it's the user's first launch by checking user count
   Future<bool> isFirstLaunch() async {
     final count = await countUsers();
-    print("total users rando:");
+    print("total users:");
     print(count);
     if (count==0)
     return true;

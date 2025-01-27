@@ -7,6 +7,7 @@ import 'package:maven/database/converter/exerciseSetDto_converter.dart';
 import 'package:maven/database/converter/noteList_converter.dart';
 import 'package:maven/feature/transfer/data/data.dart';
 import 'package:maven/feature/user/screen/user_setup_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import '../feature/theme/theme.dart';
@@ -90,10 +91,9 @@ abstract class TritiumDatabase extends FloorDatabase {
   static changeFirstTimeForNewUser (){
     _isFirstTime=true;
   }
-  void deleteMyDatabase(){
-    const String dbName = 'MavenTritium.db';
-     sqflite.deleteDatabase(dbName);
-  }
+  // void deleteMyDatabase(){
+
+  // };
 
   static final Callback _callback = Callback(
     onCreate: (database, version) {
@@ -105,7 +105,7 @@ abstract class TritiumDatabase extends FloorDatabase {
   
   static Future<TritiumDatabase> initialize() async {
     TritiumDatabase db = await $FloorTritiumDatabase
-        .databaseBuilder('randi.db')
+        .databaseBuilder('TritiumDatabase.db')
         .addCallback(_callback)
         .build();
     if (_isFirstTime) {

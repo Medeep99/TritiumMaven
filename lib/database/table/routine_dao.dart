@@ -24,4 +24,7 @@ abstract class RoutineDao {
 
   @delete
   Future<int> remove(Routine routine);
+
+  @Query('DELETE FROM routine')
+  Future <void> deleteRoutineTable();
 }

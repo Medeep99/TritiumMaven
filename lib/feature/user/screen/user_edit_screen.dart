@@ -16,11 +16,12 @@ class UserEditScreen extends StatefulWidget {
   const UserEditScreen({
     Key? key,
     required this.user,
+    
     // required this.database,
   }) : super(key: key);
 
   final User user;
-  // final TritiumDatabase database;
+  
   @override
   State<UserEditScreen> createState() => _UserEditScreenState();
 }
@@ -292,14 +293,21 @@ class _UserEditScreenState extends State<UserEditScreen> {
                                       child: const Text('Cancel'),
                                     ),
                                     TextButton(
-                                      onPressed: () {
+                                      onPressed:  () {
+                                          context.read<RoutineDao>().deleteRoutineTable();
+                                           context.read<TemplateDataDao>().dropTemplateDataTable();
+                                         
                                         // Perform delete action
-                                        context
-                                            .read<UserBloc>()
-                                            .add(UserDelete(user.id));
+                                        context .read<UserBloc>().add(UserDelete(user.id));
+                                        // TritiumDatabase.initialize();
 
-                                        // Close the dialog
-                                        Navigator.of(context).pop();
+                                        Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UserSetupScreen(), // Replace with your Page 2 widget
+      ),
+    );
+
                                       },
                                       child: const Text('Delete'),
                                     ),

@@ -317,8 +317,14 @@
 
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:maven/common/common.dart';
+import 'package:maven/database/database.dart';
+import 'package:maven/database/table/routine_dao.dart';
+import 'package:maven/database/table/template_data_dao.dart';
+import 'package:maven/feature/template/bloc/template/workout_template_service.dart';
+import 'package:maven/feature/template/template.dart';
 import 'package:maven/feature/user/services/shared_preferences_data.dart';
 // import 'package:maven/global_settings.dart'; // Import GlobalSettings
 
@@ -393,8 +399,17 @@ class _SessionWeeklyGoalWidgetState extends State<SessionWeeklyGoalWidget> {
                       title: 'Goal',
                       initialValue: widget.goal.toString(),
                       onValueSubmit: (value) {
+
+                        // context.read<RoutineDao>().deleteRoutineTable();
+                        // context.read<TemplateDataDao>().dropTemplateDataTable();
+                        // TritiumDatabase.initialize();
                         widget.onModified(int.parse(value));
-                        GlobalSettings.setGoal(int.parse(value)); // Save goal globally
+
+                        GlobalSettings.setGoal(int.parse(value));
+                        
+                        // generateMockWorkoutData(context,int.parse(value));
+                         // Save goal globally
+                        
                       },
                     ),
                   );

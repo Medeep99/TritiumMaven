@@ -25,10 +25,10 @@ abstract class _$ExerciseSetDtoCWProxy {
   /// ````
   ExerciseSetDto call({
     int? id,
-    ExerciseSetType? type,
-    bool? checked,
-    int? exerciseGroupId,
-    List<ExerciseSetDataDto>? data,
+    ExerciseSetType type,
+    bool checked,
+    int exerciseGroupId,
+    List<ExerciseSetDataDto> data,
   });
 }
 
@@ -74,20 +74,19 @@ class _$ExerciseSetDtoCWProxyImpl implements _$ExerciseSetDtoCWProxy {
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
           : id as int?,
-      type: type == const $CopyWithPlaceholder() || type == null
+      type: type == const $CopyWithPlaceholder()
           ? _value.type
           // ignore: cast_nullable_to_non_nullable
           : type as ExerciseSetType,
-      checked: checked == const $CopyWithPlaceholder() || checked == null
+      checked: checked == const $CopyWithPlaceholder()
           ? _value.checked
           // ignore: cast_nullable_to_non_nullable
           : checked as bool,
-      exerciseGroupId: exerciseGroupId == const $CopyWithPlaceholder() ||
-              exerciseGroupId == null
+      exerciseGroupId: exerciseGroupId == const $CopyWithPlaceholder()
           ? _value.exerciseGroupId
           // ignore: cast_nullable_to_non_nullable
           : exerciseGroupId as int,
-      data: data == const $CopyWithPlaceholder() || data == null
+      data: data == const $CopyWithPlaceholder()
           ? _value.data
           // ignore: cast_nullable_to_non_nullable
           : data as List<ExerciseSetDataDto>,

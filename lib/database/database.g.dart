@@ -1647,6 +1647,11 @@ class _$RoutineDao extends RoutineDao {
   }
 
   @override
+  Future<void> deleteRoutineTable() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM routine');
+  }
+
+  @override
   Future<int> add(Routine routine) {
     return _routineInsertionAdapter.insertAndReturnId(
         routine, OnConflictStrategy.abort);
@@ -2144,6 +2149,11 @@ class _$TemplateDataDao extends TemplateDataDao {
             sort: row['sort'] as int,
             routineId: row['routine_id'] as int),
         arguments: [routineId]);
+  }
+
+  @override
+  Future<void> dropTemplateDataTable() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM template_data');
   }
 
   @override

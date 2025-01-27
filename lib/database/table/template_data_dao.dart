@@ -24,5 +24,9 @@ abstract class TemplateDataDao {
 
   @delete
   Future<int> remove(TemplateData templateData);
+
+  @Query('DELETE FROM template_data')
+  Future<void> dropTemplateDataTable();
+  
 }
 

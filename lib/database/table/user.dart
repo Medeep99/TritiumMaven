@@ -115,7 +115,7 @@ class User extends Equatable {
   });
 
   User.base({
-    this.id = 1,
+    this.id = 1000,
     this.username = 'John Doe',
     this.description = 'Weightlifter',
     this.gender = Gender.male,

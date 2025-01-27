@@ -21,8 +21,8 @@ abstract class _$ImportCWProxy {
   /// ````
   Import call({
     int? id,
-    DateTime? timestamp,
-    TransferSource? source,
+    DateTime timestamp,
+    TransferSource source,
   });
 }
 
@@ -59,11 +59,11 @@ class _$ImportCWProxyImpl implements _$ImportCWProxy {
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
           : id as int?,
-      timestamp: timestamp == const $CopyWithPlaceholder() || timestamp == null
+      timestamp: timestamp == const $CopyWithPlaceholder()
           ? _value.timestamp
           // ignore: cast_nullable_to_non_nullable
           : timestamp as DateTime,
-      source: source == const $CopyWithPlaceholder() || source == null
+      source: source == const $CopyWithPlaceholder()
           ? _value.source
           // ignore: cast_nullable_to_non_nullable
           : source as TransferSource,

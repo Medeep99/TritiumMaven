@@ -25,10 +25,10 @@ abstract class _$RoutineCWProxy {
   /// ````
   Routine call({
     int? id,
-    String? name,
-    String? note,
-    DateTime? timestamp,
-    RoutineType? type,
+    String name,
+    String note,
+    DateTime timestamp,
+    RoutineType type,
   });
 }
 
@@ -73,19 +73,19 @@ class _$RoutineCWProxyImpl implements _$RoutineCWProxy {
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
           : id as int?,
-      name: name == const $CopyWithPlaceholder() || name == null
+      name: name == const $CopyWithPlaceholder()
           ? _value.name
           // ignore: cast_nullable_to_non_nullable
           : name as String,
-      note: note == const $CopyWithPlaceholder() || note == null
+      note: note == const $CopyWithPlaceholder()
           ? _value.note
           // ignore: cast_nullable_to_non_nullable
           : note as String,
-      timestamp: timestamp == const $CopyWithPlaceholder() || timestamp == null
+      timestamp: timestamp == const $CopyWithPlaceholder()
           ? _value.timestamp
           // ignore: cast_nullable_to_non_nullable
           : timestamp as DateTime,
-      type: type == const $CopyWithPlaceholder() || type == null
+      type: type == const $CopyWithPlaceholder()
           ? _value.type
           // ignore: cast_nullable_to_non_nullable
           : type as RoutineType,

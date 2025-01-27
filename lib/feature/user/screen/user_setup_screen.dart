@@ -31,9 +31,9 @@ class _UserSetupScreenState extends State<UserSetupScreen> {
   String picturePath = _gender == Gender.male 
       ? 'assets/images/maleAvatar.png' 
       : 'assets/images/femaleAvatar.png';
-
+  int _id = (_height*_age-_height+2-1*100+_age-22).toInt();
   final user = User(
-    id: 1,
+    id: _id,
     username: _name,
     description: _description,
     gender: _gender,

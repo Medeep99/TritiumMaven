@@ -5,6 +5,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:maven/feature/ml_model/calorie_manager.dart';
 
 Future<void> deleteMyDatabase() async {
   try {

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:maven/feature/user/services/shared_preferences_data.dart';
 
 import '../../../../common/common.dart';
 import '../../../../database/database.dart';
@@ -58,16 +59,20 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
 
     await routineService.deleteRoutine(event.session.routine);
 
+   
     add(SessionAdd(
       workout: Workout(
         routine: event.session.routine,
         exerciseGroups: event.session.exerciseGroups,
-        data: const WorkoutData(
+        data: WorkoutData(
           isActive: false,
-          timeElapsed: Timed.zero(),
+          timeElapsed:  Timed.zero(),
           routineId: -1,
         ),),
-    ),);
+    ),
+      
+    );
+    
   }
 
   Future<void> _delete(SessionDelete event, Emitter<SessionState> emit) async {

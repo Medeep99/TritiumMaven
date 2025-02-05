@@ -19,7 +19,7 @@ abstract class UserDao {
   @Query('SELECT * FROM user')
   Future<List<User>> getAllUsers();
   
-  @Query('SELECT * FROM user')
+  @Query('SELECT * FROM user LIMIT 1')
   Future<User?> get();
 
   @update

@@ -31,10 +31,18 @@ class _ExerciseTimerWidgetState extends State<ExerciseTimerWidget> {
     });
     super.initState();
   }
-
+  void _updateTimer() {
+    if (mounted) {  // Ensure the widget is still in the tree
+      setState(() {
+        timeLeft = widget.controller.timeLeft;
+        totalTime = widget.controller.totalTime;
+      });
+    }
+  }
   @override
   void dispose() {
-    widget.controller.removeListener(() {});
+    // widget.controller.removeListener(() {});
+    widget.controller.removeListener(_updateTimer);
     super.dispose();
   }
 
@@ -124,9 +132,18 @@ class ExerciseTimerController extends ChangeNotifier {
     });
   }
 
-  void stop() {
-    timer?.cancel();
+  // void stop() {
+  //   timer?.cancel();
+  // }
+ void stop() {
+  if (timer != null) {
+    timer!.cancel();
+    timer = null;
   }
+  timeLeft = 0;
+  totalTime = 0;
+  notifyListeners(); // Ensure UI updates after stopping
+}
 
   @override
   void dispose() {

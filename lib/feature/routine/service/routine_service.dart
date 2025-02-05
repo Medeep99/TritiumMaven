@@ -1,3 +1,5 @@
+import 'package:maven/feature/user/services/shared_preferences_data.dart';
+
 import '../../../common/common.dart';
 import '../../../database/database.dart';
 import '../../exercise/exercise.dart';
@@ -318,7 +320,6 @@ class RoutineService {
       type: RoutineType.session,
       timestamp: DateTime.now(),
     ));
-
     int sessionDataId = await sessionDataDao.add(SessionData(
       timeElapsed: workout.data.timeElapsed,
       routineId: sessionId,

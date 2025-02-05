@@ -21,6 +21,7 @@ class _UserSetupScreenState extends State<UserSetupScreen> {
   int _age = 0;
   Gender _gender = Gender.male; // Default gender is male
   double _height = 0.0;
+  double _weight = 0.1;
   int _goal = 0;
 
   Future<void> _saveUserData() async {
@@ -38,6 +39,7 @@ class _UserSetupScreenState extends State<UserSetupScreen> {
     description: _description,
     gender: _gender,
     height: _height,
+    weight: _weight,
     age: _age,
     createdAt: DateTime.now(),
     picture: picturePath,
@@ -143,6 +145,30 @@ final keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
                           child: Text(gender.toString().split('.').last),
                         );
                       }).toList(),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Weight (kg)",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: "Enter your weight in kg",
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Enter your weight in kg";
+                        }
+                        final weight = double.tryParse(value);
+                        if (weight == null || weight <= 0) {
+                          return "Enter a valid weight in kg";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _weight = double.parse(value!),
                     ),
                     const SizedBox(height: 20),
                     SizedBox(

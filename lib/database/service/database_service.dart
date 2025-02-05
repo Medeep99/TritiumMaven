@@ -10,6 +10,8 @@ class DatabaseService {
     required this.exerciseSetDao,
     required this.exerciseSetDataDao,
     required this.noteDao,
+    required this.userDao
+   
   });
 
   final ExerciseDao exerciseDao;
@@ -18,6 +20,8 @@ class DatabaseService {
   final ExerciseSetDao exerciseSetDao;
   final ExerciseSetDataDao exerciseSetDataDao;
   final NoteDao noteDao;
+  final UserDao userDao;
+  
 
   Future<List<ExerciseGroupDto>> getByRoutineId(int routineId) async {
     List<ExerciseGroupDto> exerciseGroups = [];
@@ -151,4 +155,5 @@ class DatabaseService {
     }
     return weekStreak;
   }
+  
 }

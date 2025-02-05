@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maven/feature/user/services/shared_preferences_data.dart';
+
 
 import '../../../common/common.dart';
 import '../../../database/database.dart';
@@ -25,10 +27,12 @@ class WorkoutBarWidget extends StatelessWidget {
   final bool reordering;
   final Null Function() onReorder;
   final Function(List<ExerciseGroupDto> exerciseGroups) onAddExercises;
-
+  
   @override
   Widget build(BuildContext context) {
+    DateTime _startTime = DateTime.now();
     return Container(
+      
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
       decoration: BoxDecoration(
         color: T(context).color.background,
@@ -86,88 +90,106 @@ class WorkoutBarWidget extends StatelessWidget {
                 const SizedBox(
                   width: 8,
                 ),
+
+
                 MButton(
-                  onPressed: () {
-                    showBottomSheetDialog(
-                      context: context,
-                      child: ListDialog(children: [
-                        ListTile(
-                          onTap: () {
-                            Navigator.pop(context);
-                            nameNode.requestFocus();
-                          },
-                          leading: const Icon(
-                            Icons.edit,
-                          ),
-                          title: const Text('Rename'),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.pop(context);
-                            onReorder();
-                          },
-                          leading: const Icon(
-                            Icons.filter_list,
-                          ),
-                          title: const Text('Reorder'),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            /*context.read<WorkoutBloc>().add(WorkoutToggle(
-                                      workout: workout.copyWith(active: false),
-                                    ));
-                                  Navigator.pop(context);*/
-                          },
-                          leading: const Icon(
-                            Icons.pause_circle_outline_rounded,
-                          ),
-                          title: const Text('Pause'),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Navigator.pop(context);
-                            showBottomSheetDialog(
-                              context: context,
-                              child: ConfirmationDialog(
-                                title: 'Delete',
-                                subtitle: 'All progress will be lost.',
-                                confirmText: 'Delete',
-                                confirmButtonStyle: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      T(context).color.error),
-                                  foregroundColor: MaterialStateProperty.all(
-                                      T(context).color.onError),
-                                ),
-                                onSubmit: () {
-                                  context
-                                      .read<WorkoutBloc>()
-                                      .add(const WorkoutDelete());
-                                },
-                              ),
-                            );
-                          },
-                          leading: Icon(
-                            Icons.delete_rounded,
-                            color: T(context).color.error,
-                          ),
-                          title: Text('Delete Workout',
-                              style: TextStyle(
-                                color: T(context).color.error,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                      ]),
-                      onClose: () {},
-                    );
+                  onPressed: () async {
+                      exerciseTimerController.stop();
                   },
+                  
                   height: 40,
-                  width: 40,
-                  backgroundColor: T(context).color.surface,
-                  child: Icon(
-                    Icons.more_horiz,
-                    color: T(context).color.onSurface,
+                  width: 64,
+                  backgroundColor: T(context).color.success,
+                  child: Text(
+                    'Skip',
+                    style: T(context).textStyle.labelMedium.copyWith(
+                          color: T(context).color.onSecondary,
+                        ),
                   ),
                 ),
+                // MButton(
+                //   onPressed: () {
+                //     showBottomSheetDialog(
+                //       context: context,
+                //       child: ListDialog(children: [
+                //         ListTile(
+                //           onTap: () {
+                //             Navigator.pop(context);
+                //             nameNode.requestFocus();
+                //           },
+                //           leading: const Icon(
+                //             Icons.edit,
+                //           ),
+                //           title: const Text('Rename'),
+                //         ),
+                //         ListTile(
+                //           onTap: () {
+                //             Navigator.pop(context);
+                //             onReorder();
+                //           },
+                //           leading: const Icon(
+                //             Icons.filter_list,
+                //           ),
+                //           title: const Text('Reorder'),
+                //         ),
+                //         ListTile(
+                //           onTap: () {
+                //             /*context.read<WorkoutBloc>().add(WorkoutToggle(
+                //                       workout: workout.copyWith(active: false),
+                //                     ));
+                //                   Navigator.pop(context);*/
+                //           },
+                //           leading: const Icon(
+                //             Icons.pause_circle_outline_rounded,
+                //           ),
+                //           title: const Text('Pause'),
+                //         ),
+                //         ListTile(
+                //           onTap: () {
+                //             Navigator.pop(context);
+                //             showBottomSheetDialog(
+                //               context: context,
+                //               child: ConfirmationDialog(
+                //                 title: 'Delete',
+                //                 subtitle: 'All progress will be lost.',
+                //                 confirmText: 'Delete',
+                //                 confirmButtonStyle: ButtonStyle(
+                //                   backgroundColor: MaterialStateProperty.all(
+                //                       T(context).color.error),
+                //                   foregroundColor: MaterialStateProperty.all(
+                //                       T(context).color.onError),
+                //                 ),
+                //                 onSubmit: () {
+                //                   context
+                //                       .read<WorkoutBloc>()
+                //                       .add(const WorkoutDelete());
+                //                 },
+                //               ),
+                //             );
+                //           },
+                //           leading: Icon(
+                //             Icons.delete_rounded,
+                //             color: T(context).color.error,
+                //           ),
+                //           title: Text('Delete Workout',
+                //               style: TextStyle(
+                //                 color: T(context).color.error,
+                //                 fontWeight: FontWeight.bold,
+                //               )),
+                //         ),
+                //       ]),
+                //       onClose: () {},
+                //     );
+                //   },
+                //   height: 40,
+                //   width: 40,
+                //   backgroundColor: T(context).color.surface,
+                //   child: Icon(
+                //     Icons.more_horiz,
+                //     color: T(context).color.onSurface,
+                //   ),
+                // ),
+                
                 const SizedBox(
                   width: 8,
                 ),
@@ -199,15 +221,25 @@ class WorkoutBarWidget extends StatelessWidget {
                   ),
                 )
               : MButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    workoutDuration(_startTime);
+                    int difference = DateTime.now().difference(_startTime).inSeconds;
+                    Workout newWorkout = workout.copyWith(data: 
+                    workout.data.copyWith(timeElapsed: Timed.fromSeconds(difference))
+                    );
+                    
+                    
                     context
                         .read<SessionBloc>()
-                        .add(SessionAdd(workout: workout));
+                        .add(SessionAdd(workout: newWorkout));
+                        
+                        
                     context
                         .read<WorkoutBloc>()
-                        .add(WorkoutFinish(workout: workout));
-                      print(workout.routine.timestamp);
+                        .add(WorkoutFinish(workout: newWorkout));
+                      
                   },
+                  
                   height: 40,
                   width: 84,
                   backgroundColor: T(context).color.success,
@@ -222,4 +254,5 @@ class WorkoutBarWidget extends StatelessWidget {
       ),
     );
   }
+
 }

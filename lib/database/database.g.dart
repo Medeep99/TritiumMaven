@@ -172,7 +172,7 @@ class _$TritiumDatabase extends TritiumDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `template_data` (`id` INTEGER, `sort` INTEGER NOT NULL, `routine_id` INTEGER NOT NULL, FOREIGN KEY (`routine_id`) REFERENCES `routine` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE, PRIMARY KEY (`id`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `user` (`id` INTEGER NOT NULL, `username` TEXT NOT NULL, `description` TEXT NOT NULL, `gender` INTEGER, `height` REAL NOT NULL, `age` INTEGER NOT NULL, `created_at` TEXT NOT NULL, `picture` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `user` (`id` INTEGER NOT NULL, `username` TEXT NOT NULL, `description` TEXT NOT NULL, `gender` INTEGER NOT NULL, `height` REAL NOT NULL, `weight` REAL NOT NULL, `age` INTEGER NOT NULL, `created_at` TEXT NOT NULL, `picture` TEXT NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `import` (`id` INTEGER, `timestamp` TEXT NOT NULL, `transfer_source` INTEGER NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
@@ -2193,8 +2193,9 @@ class _$UserDao extends UserDao {
                   'id': item.id,
                   'username': item.username,
                   'description': item.description,
-                  'gender': item.gender?.index,
+                  'gender': item.gender.index,
                   'height': item.height,
+                  'weight': item.weight,
                   'age': item.age,
                   'created_at': _dateTimeConverter.encode(item.createdAt),
                   'picture': item.picture
@@ -2207,8 +2208,9 @@ class _$UserDao extends UserDao {
                   'id': item.id,
                   'username': item.username,
                   'description': item.description,
-                  'gender': item.gender?.index,
+                  'gender': item.gender.index,
                   'height': item.height,
+                  'weight': item.weight,
                   'age': item.age,
                   'created_at': _dateTimeConverter.encode(item.createdAt),
                   'picture': item.picture
@@ -2231,10 +2233,9 @@ class _$UserDao extends UserDao {
             id: row['id'] as int,
             username: row['username'] as String,
             description: row['description'] as String,
-            gender: row['gender'] == null
-                ? null
-                : Gender.values[row['gender'] as int],
+            gender: Gender.values[row['gender'] as int],
             height: row['height'] as double,
+            weight: row['weight'] as double,
             age: row['age'] as int,
             createdAt: _dateTimeConverter.decode(row['created_at'] as String),
             picture: row['picture'] as String),
@@ -2254,10 +2255,9 @@ class _$UserDao extends UserDao {
             id: row['id'] as int,
             username: row['username'] as String,
             description: row['description'] as String,
-            gender: row['gender'] == null
-                ? null
-                : Gender.values[row['gender'] as int],
+            gender: Gender.values[row['gender'] as int],
             height: row['height'] as double,
+            weight: row['weight'] as double,
             age: row['age'] as int,
             createdAt: _dateTimeConverter.decode(row['created_at'] as String),
             picture: row['picture'] as String));
@@ -2265,15 +2265,14 @@ class _$UserDao extends UserDao {
 
   @override
   Future<User?> get() async {
-    return _queryAdapter.query('SELECT * FROM user',
+    return _queryAdapter.query('SELECT * FROM user LIMIT 1',
         mapper: (Map<String, Object?> row) => User(
             id: row['id'] as int,
             username: row['username'] as String,
             description: row['description'] as String,
-            gender: row['gender'] == null
-                ? null
-                : Gender.values[row['gender'] as int],
+            gender: Gender.values[row['gender'] as int],
             height: row['height'] as double,
+            weight: row['weight'] as double,
             age: row['age'] as int,
             createdAt: _dateTimeConverter.decode(row['created_at'] as String),
             picture: row['picture'] as String));

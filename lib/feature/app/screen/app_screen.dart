@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maven/common/util/util.dart';
 import 'package:maven/database/database.dart';
 import 'package:maven/database/database.dart';
 import 'package:maven/database/table/table.dart';
@@ -125,7 +126,7 @@ class _MavenState extends State<Maven> {
                               AsyncSnapshot<dynamic> snapshot) {
                             return Text(
                               'hey',
-                              // workoutDuration(state.workout?.timestamp ?? DateTime.now()),
+                              
                               style: T(context).textStyle.bodyMedium,
                             );
                           },
@@ -157,6 +158,7 @@ class _MavenState extends State<Maven> {
                       ),
                       WorkoutScreen(
                         workout: state.workout!,
+                        
                       ),
                     ],
                   ),
@@ -164,7 +166,7 @@ class _MavenState extends State<Maven> {
               );
             } else {
               return Text(
-                'Naughty Error',
+                'APP SCREEN Error',
                 style: T(context).textStyle.bodyLarge,
               );
             }

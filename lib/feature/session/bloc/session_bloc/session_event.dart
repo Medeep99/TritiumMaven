@@ -14,9 +14,12 @@ class SessionInitialize extends SessionEvent {
 class SessionAdd extends SessionEvent {
   const SessionAdd({
     required this.workout,
+    
   });
 
   final Workout workout;
+  
+
 
   @override
   List<Object?> get props => [

@@ -62,7 +62,9 @@ class SessionAboutView extends StatelessWidget {
                       const Text(
                         'Duration',
                       ),
+                      
                       Text(
+                        
                         session.data.timeElapsed.toString(),
                         style: T(context).textStyle.labelSmall,
                       ),

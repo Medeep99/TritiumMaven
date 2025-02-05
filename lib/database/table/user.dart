@@ -109,6 +109,7 @@ class User extends Equatable {
     required this.description,
     required this.gender,
     required this.height,
+    required this.weight,
     required this.age,
     required this.createdAt,
     required this.picture,
@@ -120,6 +121,7 @@ class User extends Equatable {
     this.description = 'Weightlifter',
     this.gender = Gender.male,
     this.height = 5.10,
+    this.weight = 75.0,
     this.age = 18,
     this.picture = " ",
   }) : createdAt = DateTime.now();
@@ -135,10 +137,13 @@ class User extends Equatable {
   final String description;
 
   @ColumnInfo(name: 'gender')
-  final Gender? gender;
+  final Gender gender;
 
   @ColumnInfo(name: 'height')
   final double height;
+
+  @ColumnInfo(name : 'weight')
+  final double weight;
 
   @ColumnInfo(name: 'age')
   final int age;
@@ -156,6 +161,7 @@ class User extends Equatable {
     String? description,
     Gender? gender,
     double? height,
+    double? weight,
     int? age,
     String?  picture ,
     DateTime? createdAt,
@@ -166,6 +172,7 @@ class User extends Equatable {
       description: description ?? this.description,
       gender: gender ?? this.gender,
       height: height ?? this.height,
+      weight: weight ?? this.weight,
       age: age ?? this.age,
       createdAt: createdAt ?? this.createdAt,
       picture: picture ?? this.picture,
@@ -179,6 +186,7 @@ class User extends Equatable {
     description,
     gender,
     height,
+    weight,
     age,
     createdAt,
     picture,
@@ -186,3 +194,9 @@ class User extends Equatable {
 }
 
 enum Gender { male, female }
+
+extension GenderExtension on Gender {
+  String toApiString() {
+    return this.toString().split('.').last.toLowerCase();
+  }
+}

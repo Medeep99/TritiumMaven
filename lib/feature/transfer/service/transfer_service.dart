@@ -1,6 +1,7 @@
 
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
+import 'package:maven/common/model/timed.dart';
 
 import '../../../database/database.dart';
 import '../../exercise/exercise.dart';
@@ -66,7 +67,7 @@ class TransferService {
           ),
           data: SessionData(
             routineId: -1,
-            timeElapsed: TimedConverter().decode(int.parse(row.workoutDuration)),
+            timeElapsed: Timed.fromSeconds(250),
           ),
           exerciseGroups: [],
         ));

@@ -256,6 +256,42 @@ class _UserEditScreenState extends State<UserEditScreen> {
                             '${user.height} cm',
                           ),
                         ),
+
+
+                        ListTile(
+                          onTap: () {
+                            showBottomSheetDialog(
+                              context: context,
+                              child: TextInputDialog(
+                                title: 'Weight (kg)',
+                                initialValue: user.weight.toString(),
+                                keyboardType: TextInputType.number,
+                                onValueSubmit: (value) {
+                                  setState(() {
+                                    user = user.copyWith(
+                                      weight: double.parse(value),
+                                    );
+                                  });
+                                  context.read<UserBloc>().add(
+                                        UserUpdate(
+                                          user: user,
+                                        ),
+                                      );
+                                },
+                              ),
+                            );
+                          },
+                          title: const Text(
+                            'Weight',
+                          ),
+                          trailing: Text(
+                            '${user.weight} kg',
+                          ),
+                        ),
+
+
+
+
                         ListTile(
                           title: const Text(
                             'Created At',

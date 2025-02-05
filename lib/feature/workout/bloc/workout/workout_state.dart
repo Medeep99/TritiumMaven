@@ -23,6 +23,7 @@ class WorkoutState extends Equatable {
   final WorkoutStatus status;
   final Workout? workout;
 
+
   WorkoutState copyWith({
     WorkoutStatus? status,
     Workout? workout,

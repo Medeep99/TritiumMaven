@@ -7,6 +7,7 @@ String workoutDuration(DateTime startTime) {
   int hours = difference.inHours;
   int minutes = difference.inMinutes % 60;
   int seconds = difference.inSeconds % 60;
+  print('this is teh difference $difference');
   if (hours == 0) {
     return "${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
   }

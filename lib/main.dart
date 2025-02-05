@@ -223,7 +223,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:maven/feature/ml_model/calorie_storage_service.dart';
+import 'package:maven/feature/ml_model/calorie_manager.dart';
 
 import 'database/database.dart';
 import 'debug/screen/design_tool_widget.dart';
@@ -242,18 +246,27 @@ import 'feature/workout/workout.dart';
 import 'generated/l10n.dart';
 
 void main() async {
+  Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
   
   final TritiumDatabase db = await TritiumDatabase.initialize();
+   final prefs = await SharedPreferences.getInstance();
+  
+  // Initialize CalorieStorage and Manager
+  final calorieStorage = CalorieStorageService(prefs);
+  final calorieManager = CalorieManager(calorieStorage);
 
   runApp(
+    
     MultiProvider(
       providers: [
         // Providing DAOs at the root level so they are available throughout the app
+        Provider<CalorieManager>(create: (_) => calorieManager),
         Provider<RoutineDao>(create: (_) => db.routineDao),
         Provider<TemplateDataDao>(create: (_) => db.templateDataDao),
         Provider<ExerciseDao>(create: (_) => db.exerciseDao),
         Provider<SessionDataDao>(create: (_) => db.sessionDataDao),
+        
         // Add other DAOs as needed
       ],
       child: Main(db: db),
@@ -278,6 +291,7 @@ class Main extends StatelessWidget {
       exerciseSetDao: db.exerciseSetDao,
       exerciseSetDataDao: db.exerciseSetDataDao,
       noteDao: db.noteDao,
+      userDao: db.userDao,
     );
 
     ExerciseService exerciseService = ExerciseService(
@@ -312,6 +326,7 @@ class Main extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        
         BlocProvider(
             create: (context) => ExerciseBloc(
                   exerciseService: exerciseService,
@@ -331,6 +346,7 @@ class Main extends StatelessWidget {
             create: (context) => WorkoutBloc(
                   databaseService: databaseService,
                   routineService: routineService,
+                  calorieManager: context.read<CalorieManager>(), 
                 )..add(const WorkoutInitialize())),
         BlocProvider(
             create: (context) => EquipmentBloc(

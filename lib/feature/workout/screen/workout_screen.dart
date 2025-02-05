@@ -29,6 +29,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>
   late Workout workout;
   late ExerciseTimerController timerController;
   int elapsedTimeInSeconds = 0;
+  late final DateTime _startTime;
 
   bool isReordering = false;
 
@@ -132,7 +133,9 @@ class _WorkoutScreenState extends State<WorkoutScreen>
                           builder: (BuildContext context,
                               AsyncSnapshot<dynamic> snapshot) {
                               elapsedTimeInSeconds++;
+                              
                             return Text(
+
                               workoutDuration(workout.routine.timestamp),
                               style: T(context).textStyle.labelSmall,
                             );

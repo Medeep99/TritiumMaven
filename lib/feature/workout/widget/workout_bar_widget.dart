@@ -99,11 +99,11 @@ class WorkoutBarWidget extends StatelessWidget {
                   
                   height: 40,
                   width: 64,
-                  backgroundColor: T(context).color.success,
+                  backgroundColor: T(context).color.errorContainer,
                   child: Text(
                     'Skip',
                     style: T(context).textStyle.labelMedium.copyWith(
-                          color: T(context).color.onSecondary,
+                          color: T(context).color.error,
                         ),
                   ),
                 ),
@@ -227,17 +227,15 @@ class WorkoutBarWidget extends StatelessWidget {
                     Workout newWorkout = workout.copyWith(data: 
                     workout.data.copyWith(timeElapsed: Timed.fromSeconds(difference))
                     );
-                    
-                    
-                    context
-                        .read<SessionBloc>()
-                        .add(SessionAdd(workout: newWorkout));
-                        
+                  
                         
                     context
                         .read<WorkoutBloc>()
                         .add(WorkoutFinish(workout: newWorkout));
-                      
+                    context
+                        .read<SessionBloc>()
+                        .add(SessionAdd(workout: newWorkout));
+                        
                   },
                   
                   height: 40,

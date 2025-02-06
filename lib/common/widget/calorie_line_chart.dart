@@ -92,6 +92,117 @@
 //     );
 //   }
 // }
+
+
+
+// import 'package:flutter/material.dart';
+// import 'package:fl_chart/fl_chart.dart';
+// import 'package:intl/intl.dart';
+// import 'package:maven/feature/ml_model/calorie_record.dart';
+// import 'package:maven/feature/theme/theme.dart';
+
+// class CalorieBurntLineChart extends StatelessWidget {
+//   final List<CalorieRecord> calorieHistory;
+
+//   const CalorieBurntLineChart({Key? key, required this.calorieHistory}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     if (calorieHistory.isEmpty) {
+//       return Center(
+//         child: Text(
+//           'No calorie data available',
+//           style: TextStyle(color: Colors.grey),
+//         ),
+//       );
+//     }
+
+//     // Generate data points dynamically
+//     final List<FlSpot> spots = [];
+//     final List<String> xLabels = [];
+
+//     for (int i = 0; i < calorieHistory.length; i++) {
+//       final record = calorieHistory[i];
+
+//       if (record.calories > 0) { // Only include non-zero calorie values
+//         spots.add(FlSpot(i.toDouble(), record.calories));
+//         xLabels.add(DateFormat('MM/dd').format(record.timestamp));
+//       }
+//     }
+
+//     return Container(
+//       height: 200,
+//       padding: EdgeInsets.all(16),
+//       decoration: BoxDecoration(
+//         color: Theme.of(context).colorScheme.secondaryContainer,
+//         borderRadius: BorderRadius.circular(16),
+//       ),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Text(
+//             'Calories Burnt',
+//             style:  T(context).textStyle.titleMedium
+//           ),
+//           SizedBox(height: 8),
+//           Expanded(
+//             child: LineChart(
+//               LineChartData(
+//                 gridData: FlGridData(show: true),
+//                 titlesData: FlTitlesData(
+//                   bottomTitles: AxisTitles(
+//                     sideTitles: SideTitles(
+//                       showTitles: true,
+//                       getTitlesWidget: (value, meta) {
+//                         int index = value.toInt();
+//                         if (index >= 0 && index < xLabels.length) {
+//                           return Text(
+//                             xLabels[index],
+//                             style: TextStyle(fontSize: 10),
+//                           );
+//                         }
+//                         return SizedBox.shrink();
+//                       },
+//                     ),
+//                   ),
+//                   leftTitles: AxisTitles(
+//                     sideTitles: SideTitles(
+//                       showTitles: true,
+//                       getTitlesWidget: (value, meta) {
+//                         return Text(
+//                           value.toInt().toString(),
+//                           style: TextStyle(fontSize: 10),
+//                         );
+//                       },
+//                     ),
+//                   ),
+//                   rightTitles: AxisTitles(
+//                     sideTitles: SideTitles(showTitles: false),
+//                   ),
+//                   topTitles: AxisTitles(
+//                     sideTitles: SideTitles(showTitles: false),
+//                   ),
+//                 ),
+//                 borderData: FlBorderData(show: false),
+//                 lineBarsData: [
+//                   LineChartBarData(
+//                     spots: spots,
+//                     isCurved: false,
+//                     color: Colors.orange,
+//                     dotData: FlDotData(show: true),
+//                     belowBarData: BarAreaData(show: false),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
@@ -122,7 +233,7 @@ class CalorieBurntLineChart extends StatelessWidget {
       final record = calorieHistory[i];
 
       if (record.calories > 0) { // Only include non-zero calorie values
-        spots.add(FlSpot(i.toDouble(), record.calories));
+        spots.add(FlSpot(spots.length.toDouble(), record.calories));
         xLabels.add(DateFormat('MM/dd').format(record.timestamp));
       }
     }
@@ -138,8 +249,8 @@ class CalorieBurntLineChart extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Calorie Burnt',
-            style:  T(context).textStyle.titleMedium
+            'Calories Burnt',
+            style: T(context).textStyle.titleMedium,
           ),
           SizedBox(height: 8),
           Expanded(
@@ -152,14 +263,18 @@ class CalorieBurntLineChart extends StatelessWidget {
                       showTitles: true,
                       getTitlesWidget: (value, meta) {
                         int index = value.toInt();
-                        if (index >= 0 && index < xLabels.length) {
-                          return Text(
-                            xLabels[index],
-                            style: TextStyle(fontSize: 10),
+                        if (index >= 0 && index < spots.length) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: Text(
+                              xLabels[index],
+                              style: TextStyle(fontSize: 10),
+                            ),
                           );
                         }
                         return SizedBox.shrink();
                       },
+                      interval: 1, // Ensure correct spacing
                     ),
                   ),
                   leftTitles: AxisTitles(
@@ -186,7 +301,7 @@ class CalorieBurntLineChart extends StatelessWidget {
                     spots: spots,
                     isCurved: false,
                     color: Colors.orange,
-                    dotData: FlDotData(show: false),
+                    dotData: FlDotData(show: true),
                     belowBarData: BarAreaData(show: false),
                   ),
                 ],

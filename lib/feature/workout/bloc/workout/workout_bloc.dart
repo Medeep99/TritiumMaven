@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maven/common/common.dart';
 import 'package:maven/feature/ml_model/calorie_burnt.dart';
 import 'package:maven/feature/ml_model/calorie_manager.dart';
+import 'package:maven/feature/session/model/session.dart';
+import 'package:maven/feature/settings/widget/settings_inherited_widget.dart';
 import 'package:maven/feature/template/template.dart';
 
 import '../../../../database/database.dart';
@@ -76,89 +79,35 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     ));
   }
 
-  // Future<void> _finish(WorkoutFinish event, Emitter<WorkoutState> emit) async {
-  //   final User currentUser = await databaseService.userDao.get() as User;
-  //    // Send data for prediction after workout finishes
-  // final Map<String, dynamic> inputData = {
-  //   // 'Gender': [currentUser.gender.toString()], // You should replace this with actual user gender
-  //   'Gender': ['male'],
-  //   'Age': [currentUser.age.toDouble()], // Replace with actual user age
-  //   'Height': [currentUser.height.toDouble()], // Replace with actual user height
-  //   'Weight': [currentUser.weight.toDouble()], // Replace with actual user weight
-  //   'Duration': [((event.workout.data.timeElapsed.toSeconds())/60.0).toDouble()], // Use the actual workout duration
-  //   'Heart_Rate': [180.0], // Default heart rate or capture from the user
-  //   'Body_Temp': [39.8], // Default body temp or capture from the user
-  // };
-
-  // // Call the prediction function (you may need to adapt it to your actual setup)
-  // String prediction = await getPrediction(inputData);
-
-  // // Optionally, use the prediction (e.g., log it, update UI, etc.)
-  // print('Prediction is: $prediction');
-    
-  //   await routineService.deleteRoutine(event.workout.routine);
-    
-
-  //   emit(state.copyWith(
-  //     status: WorkoutStatus.none,
-  //   ));
-  // }
-//  Future<void> _finish(WorkoutFinish event, Emitter<WorkoutState> emit) async {
-//   try {
-//     final User currentUser = await databaseService.userDao.get() as User;
-
-//     // Convert Gender enum to string before sending to API
-//     final String genderString = currentUser.gender.toApiString();
-
-//     // Prepare input data for prediction
-//     final Map<String, dynamic> inputData = {
-//       'Gender': genderString, // Now sending string instead of enum
-//       'Age': currentUser.age.toDouble(),
-//       'Height': currentUser.height.toDouble(),
-//       'Weight': currentUser.weight.toDouble(),
-//       'Duration': ((event.workout.data.timeElapsed.toSeconds()) / 60.0).toDouble(),
-//       'Heart_Rate': 180.0,
-//       'Body_Temp': 39.8,
-//     };
-
-//     print('Sending data to API: $inputData'); // Debug print
-
-//     String prediction = await getPrediction(inputData);
-    
-//     if (prediction.startsWith('Error')) {
-//       print('Prediction error: $prediction');
-//       emit(state.copyWith(
-//         status: WorkoutStatus.error,
-        
-//       )
-      
-//       );
-//       print ('Error : $prediction()');
-//     } else {
-//       print('Calories burned: $prediction');
-//       emit(state.copyWith(
-//         status: WorkoutStatus.none,
-//       ));
-//     }
-
-//     await routineService.deleteRoutine(event.workout.routine);
-
-//   } catch (e) {
-//     print('Error in _finish: $e');
-//     emit(state.copyWith(
-//       status: WorkoutStatus.error,
-      
-//     ));
-//     print ('Error : $e.$toString()');
-//   }
-// }
 Future<void> _finish(WorkoutFinish event, Emitter<WorkoutState> emit) async {
   try {
     final User currentUser = await databaseService.userDao.get() as User;
 
     // Convert Gender enum to string before sending to API
     final String genderString = currentUser.gender.toApiString();
-
+    double min = event.workout.data.timeElapsed.toSeconds()/60.0;
+    double hr=0.0;
+    double bt = 0.0;
+    if (min>=10){
+      hr = 140;
+      bt= 37.0;
+    }
+    else if (min>20.0 && min <=45.0) {
+      hr = 160;
+       bt= 38.0;
+    }
+    else if (min >=45.0 && min<=60.0){
+      hr = 180;
+       bt= 38.0;
+    }
+    else if (min >60.0 ){
+      hr =200;
+       bt= 39.0;
+    }
+    else if (min <10.0){
+      hr =100;
+       bt= 39.0;
+    }
     // Prepare input data for prediction
     final Map<String, dynamic> inputData = {
       'Gender': genderString,
@@ -166,7 +115,7 @@ Future<void> _finish(WorkoutFinish event, Emitter<WorkoutState> emit) async {
       'Height': currentUser.height.toDouble(),
       'Weight': currentUser.weight.toDouble(),
       'Duration': ((event.workout.data.timeElapsed.toSeconds()) / 60.0).toDouble(),
-      'Heart_Rate': 180.0,
+      'Heart_Rate':hr.toDouble(),
       'Body_Temp': 39.8,
     };
 
@@ -189,6 +138,12 @@ Future<void> _finish(WorkoutFinish event, Emitter<WorkoutState> emit) async {
       // Add this block to save calories
       try {
         double calories = double.parse(prediction);
+        // await calorieManager.addCalorieRecord(50.0);
+
+        // await calorieManager.addCalorieRecord(20.0);
+        
+        // await calorieManager.addCalorieRecord(300.0);
+        
         await calorieManager.addCalorieRecord(calories);  // Add this line
         print('Calories saved successfully');
       } catch (e) {

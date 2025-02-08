@@ -28,15 +28,19 @@ class WorkoutStateEmpty extends WorkoutEvent {
 }
 
 class WorkoutFinish extends WorkoutEvent {
-  const WorkoutFinish({
+   const WorkoutFinish({
     required this.workout,
+
+    
   });
 
   final Workout workout;
+  
 
   @override
   List<Object?> get props => [
         workout,
+        
       ];
 }
 

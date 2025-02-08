@@ -50,6 +50,8 @@
 # if __name__ == '__main__':
 #     app.run(debug=True, host='0.0.0.0', port=5002)  # Use 0.0.0.0 to listen on all interfaces
 
+
+# ////////------------------------///////////
 from flask import Flask, request, jsonify
 import pandas as pd
 import pickle
@@ -86,3 +88,5 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5005)
+
+

@@ -1,3 +1,4 @@
+import 'package:maven/feature/ml_model/calorie_manager.dart';
 import 'package:maven/feature/user/services/shared_preferences_data.dart';
 
 import '../../../common/common.dart';
@@ -18,6 +19,7 @@ class RoutineService {
   final WorkoutDataDao workoutDataDao;
   final TemplateDataDao templateDataDao;
   final SessionDataDao sessionDataDao;
+  final CalorieManager calorieManager;
 
   RoutineService({
     required this.routineDao,
@@ -29,6 +31,7 @@ class RoutineService {
     required this.workoutDataDao,
     required this.templateDataDao,
     required this.sessionDataDao,
+    required this.calorieManager,
   });
 
   /// Gets a template from the database.
@@ -320,9 +323,12 @@ class RoutineService {
       type: RoutineType.session,
       timestamp: DateTime.now(),
     ));
+    
     int sessionDataId = await sessionDataDao.add(SessionData(
+      
       timeElapsed: workout.data.timeElapsed,
       routineId: sessionId,
+      
     ));
 
     for (ExerciseGroupDto exerciseGroup in workout.exerciseGroups) {
@@ -370,6 +376,7 @@ class RoutineService {
         timeElapsed: session.data.timeElapsed,
         routineId: sessionId,
         importId: importId,
+        
       ));
 
       for (ExerciseGroupDto group in session.exerciseGroups) {

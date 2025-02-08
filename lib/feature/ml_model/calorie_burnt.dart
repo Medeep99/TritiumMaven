@@ -51,8 +51,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future<String> getPrediction(Map<String, dynamic> inputData) async {
-  final String url = 'http://10.0.2.2:5005/predict'; // Emulator localhost
-
+  // final String url = 'http://10.0.2.2:5005/predict'; // Emulator localhost
+  
+final String url = 'http://192.168.31.10:5005/predict' ; //physical phone host
   try {
     // Format data to match the expected format
     final formattedInputData = {
@@ -71,18 +72,33 @@ Future<String> getPrediction(Map<String, dynamic> inputData) async {
       body: jsonEncode(formattedInputData),
     );
 
+    // if (response.statusCode == 200) {
+    //   final Map<String, dynamic> decodedResponse = jsonDecode(response.body);
+      
+    //   if (decodedResponse['status'] == 'success') {
+    //     return decodedResponse['prediction'].toString();
+    //   } else {
+    //     return 'Error: ${decodedResponse['message']}';
+    //   }
+    // } else {
+    //   return 'Error: ${response.reasonPhrase}';
+    // }
     if (response.statusCode == 200) {
       final Map<String, dynamic> decodedResponse = jsonDecode(response.body);
-      
-      if (decodedResponse['status'] == 'success') {
+
+      if (decodedResponse['status'] == 'success' && decodedResponse.containsKey('prediction')) {
         return decodedResponse['prediction'].toString();
       } else {
-        return 'Error: ${decodedResponse['message']}';
+        print('API Error: ${decodedResponse['message']}');
+        return '500'; // API returned an error message
       }
     } else {
-      return 'Error: ${response.reasonPhrase}';
+      print('HTTP Error: ${response.statusCode} - ${response.reasonPhrase}');
+      return '404'; // API response was not successful
     }
   } catch (e) {
     return 'Error: $e';
   }
+
+  
 }

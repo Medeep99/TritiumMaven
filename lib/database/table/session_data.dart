@@ -30,6 +30,7 @@ class SessionData extends Equatable {
     required this.timeElapsed,
     required this.routineId,
     this.importId,
+ 
   });
 
   @PrimaryKey(autoGenerate: true)
@@ -45,11 +46,14 @@ class SessionData extends Equatable {
   @ColumnInfo(name: 'import_id')
   final int? importId;
 
+
+
   @override
   List<Object?> get props => [
     id,
     timeElapsed,
     routineId,
     importId,
+    
   ];
 }

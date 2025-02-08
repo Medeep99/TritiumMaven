@@ -61,7 +61,9 @@ class Settings extends Equatable {
       return '${(volume * 0.45359237).toStringAsFixed(2).truncateZeros} kgs';
     }
   }
-
+  String parseCalories (double calories){
+    return '${calories.toString()} kcal';
+  }
   double parseHeight(double height) {
     return height;
     /*switch (unit) {

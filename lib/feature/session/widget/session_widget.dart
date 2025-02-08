@@ -88,6 +88,7 @@ class SessionWidget extends StatelessWidget {
                     const SizedBox(
                       width: 20,
                     ),
+                  
                   ],
                 ),
                 const SizedBox(

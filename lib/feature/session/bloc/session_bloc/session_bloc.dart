@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:maven/feature/exercise/service/shared_preferences_service.dart';
+import 'package:maven/feature/ml_model/calorie_manager.dart';
 import 'package:maven/feature/user/services/shared_preferences_data.dart';
 
 import '../../../../common/common.dart';
@@ -21,6 +23,10 @@ part 'session_state.dart';
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
   SessionBloc({
     required this.routineService,
+
+    required this.databaseService,
+    required this.calorieManager,
+
   }) : super(const SessionState()) {
     on<SessionInitialize>(_initialize);
     on<SessionAdd>(_add);
@@ -30,6 +36,9 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
   }
 
   final RoutineService routineService;
+  
+  final DatabaseService databaseService;
+  final CalorieManager calorieManager;
 
   Future<void> _initialize(SessionInitialize event,
       Emitter<SessionState> emit) async {
@@ -43,8 +52,13 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     emit(state.copyWith(
       status: SessionStatus.loading,
     ));
-
+    
     Session session = await routineService.addSession(event.workout);
+    print('Print volueme:::::: ${session.volume}');
+    
+    final User currentUser = await databaseService.userDao.get()as User;
+    double timeElapsed = (event.workout.data.timeElapsed.toSeconds()/60.0);
+    await calorieManager.predictCalories(currentUser,timeElapsed, session.volume);
 
     emit(state.copyWith(
       status: SessionStatus.loaded,

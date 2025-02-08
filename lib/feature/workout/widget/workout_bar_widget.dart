@@ -227,15 +227,16 @@ class WorkoutBarWidget extends StatelessWidget {
                     Workout newWorkout = workout.copyWith(data: 
                     workout.data.copyWith(timeElapsed: Timed.fromSeconds(difference))
                     );
-                  
-                        
+                     
+                   
+                    
                     context
                         .read<WorkoutBloc>()
                         .add(WorkoutFinish(workout: newWorkout));
-                    context
+                         context
                         .read<SessionBloc>()
                         .add(SessionAdd(workout: newWorkout));
-                        
+  
                   },
                   
                   height: 40,

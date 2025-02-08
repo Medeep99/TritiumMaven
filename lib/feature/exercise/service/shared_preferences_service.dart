@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesService {
 
   static const _goalKey = 'sessionWeeklyGoal';
+  static const _volumeKey = 'sessionVolume';
 
   // Fetch the goal value from SharedPreferences
   Future<int> getSessionWeeklyGoal() async {
@@ -16,4 +17,5 @@ class SharedPreferencesService {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt(_goalKey, goal);
   }
+  
 }

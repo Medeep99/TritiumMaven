@@ -223,6 +223,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:maven/feature/exercise/service/shared_preferences_service.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -250,7 +251,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   final TritiumDatabase db = await TritiumDatabase.initialize();
-   final prefs = await SharedPreferences.getInstance();
+  final prefs = await SharedPreferences.getInstance();
   
   // Initialize CalorieStorage and Manager
   final calorieStorage = CalorieStorageService(prefs);
@@ -322,6 +323,7 @@ class Main extends StatelessWidget {
       exerciseDao: db.exerciseDao,
       templateDataDao: db.templateDataDao,
       sessionDataDao: db.sessionDataDao,
+      calorieManager: context.read<CalorieManager>(), 
     );
 
     return MultiBlocProvider(
@@ -347,6 +349,10 @@ class Main extends StatelessWidget {
                   databaseService: databaseService,
                   routineService: routineService,
                   calorieManager: context.read<CalorieManager>(), 
+                  sharedPreferencesService: SharedPreferencesService(),
+                  
+                  
+                  
                 )..add(const WorkoutInitialize())),
         BlocProvider(
             create: (context) => EquipmentBloc(
@@ -354,7 +360,10 @@ class Main extends StatelessWidget {
                 )..add(const EquipmentInitialize())),
         BlocProvider(
             create: (context) => SessionBloc(
+                  databaseService: databaseService,
                   routineService: routineService,
+                  
+                  calorieManager: context.read<CalorieManager>(), 
                 )..add(const SessionInitialize())),
         BlocProvider(
             create: (context) => SettingsBloc(

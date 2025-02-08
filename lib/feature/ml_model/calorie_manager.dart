@@ -53,27 +53,79 @@ class CalorieManager {
     _calorieHistory.clear();
     await _storageService.clearCalorieRecords();
   }
-    static Future<double?> predictCalories(User user, int workoutDuration) async {
+    
+    
+    Future<double?> predictCalories(User user, double workoutDuration, double volume) async {
+    print (volume);
+    if(volume >0){
+    double hr_workout = calculateHr(user.age.toDouble(), workoutDuration , volume, user.gender.toString());
     final inputData = {
       'Gender': user.gender.toApiString(),
       'Age': user.age.toDouble(),
       'Height': user.height.toDouble(),
       'Weight': user.weight.toDouble(),
-      'Duration': (workoutDuration / 60.0).toDouble(),
-      'Heart_Rate': 180.0,
-      'Body_Temp': 39.8,
+      'Duration': (workoutDuration).toDouble(),
+      'Heart_Rate': (hr_workout).toDouble(),
+      'Body_Temp': 38.5,
     };
-print('Sending data to API: $inputData');
+      print('Sending data to API: $inputData');
     try {
       String prediction = await getPrediction(inputData).timeout(
         const Duration(seconds: 5),
         onTimeout: () => throw TimeoutException('Prediction timeout'),
       );
-      print('this is predicted calorie $prediction');
-      return double.parse(prediction);
+      double? calorieValue = double.tryParse(prediction);
+      print (calorieValue);
+
+      if(calorieValue != null){
+      print('this is predicted calorie $calorieValue');
+      
+      double calorie = double.tryParse(prediction)??0;
+      await addCalorieRecord(calorie);
+      print ('Calories saved succesfully');
+      return (calorie);
+      }
     } catch (e) {
       print('Prediction error: $e');
+      print ('Error saving calories');
       return null;
     }
+    
+    }
+    else{
+    await addCalorieRecord(0.0);
+    return 0.0;
+    }
+    }
+    // Get the latest calorie record
+  double getLatestCalorieRecord() {
+    if (_calorieHistory.isNotEmpty) {
+      return _calorieHistory.last as double;
+    }
+    return 0.0; // Return null if there are no records
   }
+  double calculateHr(double age, double workoutDuration, double workoutVolume, String gender) {
+   double W_ref = (gender == 'male') ? 3.5 : 2.5;
+   double HR_rest = 70.0;
+   double HR_max = 208 - (0.7 * age);
+   double HRR = HR_max - HR_rest;
+
+   double W_actual = workoutVolume / workoutDuration;
+   double W_max = W_ref * (1 - (0.035 * (age - 25.0)));
+   
+   if (W_max <= 0) {
+      print("Warning: W_max is too low, adjusting to 1.0 to prevent division error.");
+      W_max = 1.0;
+   }
+
+   double I = W_actual / W_max;
+   I = I.clamp(0, 1); // Ensure intensity is within a realistic range
+
+   double HR_workout = HR_rest + I * HRR;
+
+   print("W_actual: $W_actual, W_max: $W_max, I: $I, HR_workout: $HR_workout");
+   return HR_workout;
+}
+
+
 }

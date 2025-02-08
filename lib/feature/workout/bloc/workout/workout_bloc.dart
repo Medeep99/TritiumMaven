@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maven/common/common.dart';
+import 'package:maven/feature/exercise/service/shared_preferences_service.dart';
 import 'package:maven/feature/ml_model/calorie_burnt.dart';
 import 'package:maven/feature/ml_model/calorie_manager.dart';
 import 'package:maven/feature/session/model/session.dart';
 import 'package:maven/feature/settings/widget/settings_inherited_widget.dart';
 import 'package:maven/feature/template/template.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../database/database.dart';
 import '../../../exercise/exercise.dart';
@@ -22,6 +24,9 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     required this.routineService,
     required this.databaseService,
     required this.calorieManager,
+    required this.sharedPreferencesService,
+    
+    
    
 
     
@@ -36,6 +41,8 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
   final RoutineService routineService;
   final DatabaseService databaseService;
   final CalorieManager calorieManager;
+  final SharedPreferencesService sharedPreferencesService;
+  
   
  
 
@@ -79,92 +86,30 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     ));
   }
 
-Future<void> _finish(WorkoutFinish event, Emitter<WorkoutState> emit) async {
-  try {
-    final User currentUser = await databaseService.userDao.get() as User;
-
-    // Convert Gender enum to string before sending to API
-    final String genderString = currentUser.gender.toApiString();
-    double min = event.workout.data.timeElapsed.toSeconds()/60.0;
-    double hr=0.0;
-    double bt = 0.0;
-    if (min>=10){
-      hr = 140;
-      bt= 37.0;
-    }
-    else if (min>20.0 && min <=45.0) {
-      hr = 160;
-       bt= 38.0;
-    }
-    else if (min >=45.0 && min<=60.0){
-      hr = 180;
-       bt= 38.0;
-    }
-    else if (min >60.0 ){
-      hr =200;
-       bt= 39.0;
-    }
-    else if (min <10.0){
-      hr =100;
-       bt= 39.0;
-    }
-    // Prepare input data for prediction
-    final Map<String, dynamic> inputData = {
-      'Gender': genderString,
-      'Age': currentUser.age.toDouble(),
-      'Height': currentUser.height.toDouble(),
-      'Weight': currentUser.weight.toDouble(),
-      'Duration': ((event.workout.data.timeElapsed.toSeconds()) / 60.0).toDouble(),
-      'Heart_Rate':hr.toDouble(),
-      'Body_Temp': 39.8,
-    };
-
-    print('Sending data to API: $inputData');
-
-    // String prediction = await getPrediction(inputData);
-    String prediction = await getPrediction(inputData).timeout(
-      const Duration(seconds: 5),
-      onTimeout: () => 'Error: Prediction timeout',
-    );
+// Future<void> _finish(WorkoutFinish event, Emitter<WorkoutState> emit) async {
+//       try{
+//       emit(state.copyWith(
+//         status: WorkoutStatus.none,
+//       ));
     
-    if (prediction.startsWith('Error')) {
-      print('Prediction error: $prediction');
-      emit(state.copyWith(
-        status: WorkoutStatus.error,
-      ));
-      print ('Error : $prediction()');
-    } else {
-      print('Calories burned: $prediction');
-      // Add this block to save calories
-      try {
-        double calories = double.parse(prediction);
-        // await calorieManager.addCalorieRecord(50.0);
 
-        // await calorieManager.addCalorieRecord(20.0);
-        
-        // await calorieManager.addCalorieRecord(300.0);
-        
-        await calorieManager.addCalorieRecord(calories);  // Add this line
-        print('Calories saved successfully');
-      } catch (e) {
-        print('Error saving calories: $e');
-      }
-      
-      emit(state.copyWith(
-        status: WorkoutStatus.none,
-      ));
-    }
+//     await routineService.deleteRoutine(event.workout.routine);
 
+//   } catch (e) {
+//     print('Error in _finish: $e');
+//     emit(state.copyWith(
+//       status: WorkoutStatus.error,
+//     ));
+//     print ('Error : $e.$toString()');
+//   }
+// }
+ Future<void> _finish(WorkoutFinish event, Emitter<WorkoutState> emit) async {
     await routineService.deleteRoutine(event.workout.routine);
 
-  } catch (e) {
-    print('Error in _finish: $e');
     emit(state.copyWith(
-      status: WorkoutStatus.error,
+      status: WorkoutStatus.none,
     ));
-    print ('Error : $e.$toString()');
   }
-}
 
 
   Future<void> _delete(WorkoutDelete event, Emitter<WorkoutState> emit) async {

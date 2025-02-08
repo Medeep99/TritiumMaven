@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maven/common/util/util.dart';
-import 'package:maven/database/database.dart';
-import 'package:maven/database/database.dart';
-import 'package:maven/database/table/table.dart';
+
 import 'package:maven/feature/exercise/exercise.dart';
-import 'package:maven/feature/user/screen/user_edit_screen.dart';
-import 'package:maven/feature/user/widget/user_widget.dart';
+
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:sqflite/sqflite.dart';
-import '../../../database/table/user.dart';
+
 import '../../home/home.dart';
 import '../../profile/screen/profile_screen.dart';
 import '../../progress/screen/progress_screen.dart';

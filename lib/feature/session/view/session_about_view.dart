@@ -116,6 +116,7 @@ class SessionAboutView extends StatelessWidget {
                       ),
                     ],
                   ),
+                  
                   TableRow(
                     children: [
                       const Text(

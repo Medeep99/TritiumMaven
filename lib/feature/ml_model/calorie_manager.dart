@@ -58,6 +58,7 @@ class CalorieManager {
     Future<double?> predictCalories(User user, double workoutDuration, double volume) async {
     print (volume);
     if(volume >0){
+    volume =volume/2.20462;
     double hr_workout = calculateHr(user.age.toDouble(), workoutDuration , volume, user.gender.toString());
     final inputData = {
       'Gender': user.gender.toApiString(),
@@ -71,7 +72,7 @@ class CalorieManager {
       print('Sending data to API: $inputData');
     try {
       String prediction = await getPrediction(inputData).timeout(
-        const Duration(seconds: 5),
+        const Duration(seconds: 15),
         onTimeout: () => throw TimeoutException('Prediction timeout'),
       );
       double? calorieValue = double.tryParse(prediction);

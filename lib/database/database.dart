@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:floor/floor.dart';
@@ -7,6 +8,7 @@ import 'package:maven/database/converter/exerciseSetDto_converter.dart';
 import 'package:maven/database/converter/noteList_converter.dart';
 import 'package:maven/feature/transfer/data/data.dart';
 import 'package:maven/feature/user/screen/user_setup_screen.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
@@ -129,7 +131,13 @@ abstract class TritiumDatabase extends FloorDatabase {
       } 
       //create a code to navigate to setup screen here
     }
+    printDatabasePath();
     return db;
   }
 
+}
+Future<void> printDatabasePath() async {
+  Directory documentsDirectory = await getApplicationDocumentsDirectory();
+  String dbPath = '${documentsDirectory.path}/TritiumDatabase.db';
+  print("Database Path: $dbPath");
 }

@@ -327,6 +327,7 @@ class RoutineService {
     int sessionDataId = await sessionDataDao.add(SessionData(
       
       timeElapsed: workout.data.timeElapsed,
+      // timeElapsed: Timed.fromSeconds(2700),
       routineId: sessionId,
       
     ));

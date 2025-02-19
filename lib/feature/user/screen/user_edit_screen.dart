@@ -166,59 +166,6 @@ class _UserEditScreenState extends State<UserEditScreen> {
                           ),
                         ),
                         ListTile(
-                          // onTap: () {
-                          //   showBottomSheetDialog(
-                          //     context: context,
-                          //     child: ListDialog(
-                          //       children: [
-                          //         ListTile(
-                          //           onTap: () {
-                          //             Navigator.pop(context);
-                          //             setState(() {
-                          //               user = user.copyWith(
-                          //                 gender: Gender.male, // Use gender_enum.Gender.male
-                          //               );
-                          //             });
-                          //             context.read<UserBloc>().add(
-                          //                   UserUpdate(
-                          //                     user: user,
-                          //                   ),
-                          //                 );
-                          //           },
-                          //           leading: Icon(
-                          //             Icons.male,
-                          //             color: Colors.blue,
-                          //           ),
-                          //           title: Text(
-                          //             'Male',
-                          //           ),
-                          //         ),
-                          //         ListTile(
-                          //           onTap: () {
-                          //             Navigator.pop(context);
-                          //             setState(() {
-                          //               user = user.copyWith(
-                          //                 gender: Gender.female , // Use gender_enum.Gender.female
-                          //               );
-                          //             });
-                          //             context.read<UserBloc>().add(
-                          //               UserUpdate(
-                          //                 user: user,
-                          //               ),
-                          //             );
-                          //           },
-                          //           leading: Icon(
-                          //             Icons.female,
-                          //             color: Colors.pink,
-                          //           ),
-                          //           title: Text(
-                          //             'Female',
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   );
-                          // },
                           title: const Text(
                             'Gender',
                           ),
@@ -316,39 +263,87 @@ class _UserEditScreenState extends State<UserEditScreen> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Delete User'),
-                                  content: const Text(
-                                      'Are you sure you want to delete this user?'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pop(); // Close the dialog
-                                      },
-                                      child: const Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed:  () {
-                                          context.read<RoutineDao>().deleteRoutineTable();
-                                           context.read<TemplateDataDao>().dropTemplateDataTable();
+                                // return AlertDialog(
+                                //   title: const Text('Delete User'),
+                                //   content: 
+                                  
+                                //   const Text(
+                                //       'WARNING\nDeleting the user will close the application'),
+                                //   actions: <Widget>[
+                                //     TextButton(
+                                //       onPressed: () {
+                                //         Navigator.of(context)
+                                //             .pop(); // Close the dialog
+                                //       },
+                                //       child: const Text('Cancel'),
+                                //     ),
+                                //     TextButton(
+                                //       onPressed:  () {
+                                //           context.read<RoutineDao>().deleteRoutineTable();
+                                //            context.read<TemplateDataDao>().dropTemplateDataTable();
                                          
-                                        // Perform delete action
-                                        context .read<UserBloc>().add(UserDelete(user.id));
-                                        // TritiumDatabase.initialize();
+                                //         // Perform delete action
+                                //         context .read<UserBloc>().add(UserDelete(user.id));
+                                //         // TritiumDatabase.initialize();
 
-                                        Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => UserSetupScreen(), // Replace with your Page 2 widget
+                                //       },
+                                //       child: const Text('Delete'),
+                                //     ),
+                                //   ],
+                                // );
+                                return AlertDialog(
+  title: const Text('Delete User'),
+  content: Column(
+    mainAxisSize: MainAxisSize.min,
+    children: const [
+      Icon(
+        Icons.warning_rounded,
+        size: 60,
+        color: Colors.red,
       ),
-    );
+      Padding(
+        padding: EdgeInsets.all(8.0),
+        child: SizedBox(height: 10),
+      ),
+      Text(
+        'Deleting the user will close the application',
+        textAlign: TextAlign.center,
+      ),
+    ],
+  ),
+  actions: <Widget>[
+    TextButton(
+      
+      onPressed: () {
+        Navigator.of(context).pop(); // Close the dialog
+      },
+      child: const Text('Cancel'),
+    ),
+    // TextButton(
+    //   onPressed: () {
+    //     context.read<RoutineDao>().deleteRoutineTable();
+    //     context.read<TemplateDataDao>().dropTemplateDataTable();
+    //     // Perform delete action
+    //     context.read<UserBloc>().add(UserDelete(user.id));
+    //   },
+    //   child: const Text('Delete'),
+    // ),
+    TextButton(
+  style: TextButton.styleFrom(
+    foregroundColor: Colors.red, // Set text color to red
+  ),
+  onPressed: () {
+    context.read<RoutineDao>().deleteRoutineTable();
+    context.read<TemplateDataDao>().dropTemplateDataTable();
+    // Perform delete action
+    context.read<UserBloc>().add(UserDelete(user.id));
+  },
+  child: const Text('Delete'),
+)
 
-                                      },
-                                      child: const Text('Delete'),
-                                    ),
-                                  ],
-                                );
+  ],
+);
+
                               },
                             );
                           },

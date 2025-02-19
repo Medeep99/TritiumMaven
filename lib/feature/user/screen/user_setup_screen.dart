@@ -50,7 +50,7 @@ class _UserSetupScreenState extends State<UserSetupScreen> {
   context.read<UserBloc>().add(UserAdd(user));
 
   // Mock routine and exercise list data
-  generateMockWorkoutData(context, _goal);
+  generateWorkoutTemplate(context, _goal);
 
 
   // Navigate to the main app screen
@@ -271,7 +271,7 @@ final keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
                     const SizedBox(height: 5),
                     TextFormField(
                       decoration: const InputDecoration(
-                        hintText: "Enter workout days",
+                        hintText: "Enter your available workout days per week.",
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.number,
@@ -280,7 +280,7 @@ final keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
                           return "Enter workout days";
                         }
                         final _goal = int.tryParse(value);
-                        if (_goal == null || _goal<= 0) {
+                        if (_goal == null || _goal<= 0 || _goal>7) {
                           return "Enter valid workout days";
                         }
                         return null;
@@ -288,25 +288,38 @@ final keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
                       onSaved: (value) => _goal = int.parse(value!),
                       
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
           
-                    const SizedBox(height:20 ),
+                    const SizedBox(height:10 ),
                     Center(
                       child: SizedBox(
                         width: 160,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromARGB(255, 59, 83, 148),
+                            
                             padding: const EdgeInsets.symmetric(vertical: 16),
+
                           ),
+                          
                           onPressed: _saveUserData,
                           child: const Text("Save", style: TextStyle(fontSize: 18,color: Colors.white)),
                         ),
+
                       ),
+                      
                     ),
+                    SizedBox(
+                          height: 20,
+                          
+                          
+                        )
                   ],
+
                 ),
+                
               ),
+              
             ),
           ),
         ),

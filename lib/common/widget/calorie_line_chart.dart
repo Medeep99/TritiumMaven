@@ -238,78 +238,153 @@ class CalorieBurntLineChart extends StatelessWidget {
       }
     }
 
+    // return Container(
+    //   height: 200,
+    //   padding: EdgeInsets.all(16),
+    //   decoration: BoxDecoration(
+    //     color: Theme.of(context).colorScheme.secondaryContainer,
+    //     borderRadius: BorderRadius.circular(16),
+    //   ),
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       Text(
+    //         'Calories Burnt',
+    //         style: T(context).textStyle.titleMedium,
+    //       ),
+    //       SizedBox(height: 8),
+    //       Expanded(
+    //         child: LineChart(
+    //           LineChartData(
+    //             gridData: FlGridData(show: false),
+    //             titlesData: FlTitlesData(
+    //               bottomTitles: AxisTitles(
+    //                 sideTitles: SideTitles(
+    //                   showTitles: true,
+    //                   getTitlesWidget: (value, meta) {
+    //                     int index = value.toInt();
+    //                     if (index >= 0 && index < spots.length) {
+    //                       return Padding(
+    //                         padding: const EdgeInsets.only(top: 4.0),
+    //                         child: Text(
+    //                           xLabels[index],
+    //                           style: TextStyle(fontSize: 10),
+    //                         ),
+    //                       );
+    //                     }
+    //                     return SizedBox.shrink();
+    //                   },
+    //                   interval: 1, // Ensure correct spacing
+    //                 ),
+    //               ),
+    //               leftTitles: AxisTitles(
+    //                 sideTitles: SideTitles(
+    //                   showTitles: true,
+    //                   getTitlesWidget: (value, meta) {
+    //                     return Text(
+    //                       value.toInt().toString(),
+    //                       style: TextStyle(fontSize: 10),
+    //                     );
+    //                   },
+    //                 ),
+    //               ),
+    //               rightTitles: AxisTitles(
+    //                 sideTitles: SideTitles(showTitles: false),
+    //               ),
+    //               topTitles: AxisTitles(
+    //                 sideTitles: SideTitles(showTitles: false),
+    //               ),
+    //             ),
+    //             borderData: FlBorderData(show: false),
+    //             lineBarsData: [
+    //               LineChartBarData(
+    //                 spots: spots,
+    //                 isCurved: false,
+    //                 color: Colors.orange,
+    //                 dotData: FlDotData(show: true),
+    //                 belowBarData: BarAreaData(show: false),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
     return Container(
-      height: 200,
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondaryContainer,
-        borderRadius: BorderRadius.circular(16),
+  margin: EdgeInsets.only(bottom: 16), // Added bottom margin
+  height: 200,
+  padding: EdgeInsets.all(16),
+  decoration: BoxDecoration(
+    color: Theme.of(context).colorScheme.secondaryContainer,
+    borderRadius: BorderRadius.circular(16),
+  ),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'Calories Burnt',
+        style: T(context).textStyle.titleMedium,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Calories Burnt',
-            style: T(context).textStyle.titleMedium,
-          ),
-          SizedBox(height: 8),
-          Expanded(
-            child: LineChart(
-              LineChartData(
-                gridData: FlGridData(show: false),
-                titlesData: FlTitlesData(
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: (value, meta) {
-                        int index = value.toInt();
-                        if (index >= 0 && index < spots.length) {
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 4.0),
-                            child: Text(
-                              xLabels[index],
-                              style: TextStyle(fontSize: 10),
-                            ),
-                          );
-                        }
-                        return SizedBox.shrink();
-                      },
-                      interval: 1, // Ensure correct spacing
-                    ),
-                  ),
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: (value, meta) {
-                        return Text(
-                          value.toInt().toString(),
+      SizedBox(height: 8),
+      Expanded(
+        child: LineChart(
+          LineChartData(
+            gridData: FlGridData(show: false),
+            titlesData: FlTitlesData(
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  getTitlesWidget: (value, meta) {
+                    int index = value.toInt();
+                    if (index >= 0 && index < spots.length) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Text(
+                          xLabels[index],
                           style: TextStyle(fontSize: 10),
-                        );
-                      },
-                    ),
-                  ),
-                  rightTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  topTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
+                        ),
+                      );
+                    }
+                    return SizedBox.shrink();
+                  },
+                  interval: 1, // Ensure correct spacing
                 ),
-                borderData: FlBorderData(show: false),
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: spots,
-                    isCurved: false,
-                    color: Colors.orange,
-                    dotData: FlDotData(show: true),
-                    belowBarData: BarAreaData(show: false),
-                  ),
-                ],
+              ),
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  getTitlesWidget: (value, meta) {
+                    return Text(
+                      value.toInt().toString(),
+                      style: TextStyle(fontSize: 10),
+                    );
+                  },
+                ),
+              ),
+              rightTitles: AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              topTitles: AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
               ),
             ),
+            borderData: FlBorderData(show: false),
+            lineBarsData: [
+              LineChartBarData(
+                spots: spots,
+                isCurved: false,
+                color: Colors.orange,
+                dotData: FlDotData(show: true),
+                belowBarData: BarAreaData(show: false),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
-    );
+    ],
+  ),
+);
+
   }
 }

@@ -16,7 +16,7 @@ import 'package:maven/feature/template/bloc/template/template_bloc.dart';
 import 'package:maven/feature/transfer/model/exercise_conversion.dart';
 import 'package:maven/feature/transfer/model/transfer_source.dart';
 
-void generateMockWorkoutData(BuildContext context, int goal) {
+void generateWorkoutTemplate(BuildContext context, int goal) {
   final List<String> daysOfWeek = [
     
    'Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'

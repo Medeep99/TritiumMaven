@@ -143,20 +143,20 @@ class _ExerciseGroupWidgetState extends State<ExerciseGroupWidget> {
                   ),
                   child: Slidable(
                     
-                    endActionPane: ActionPane(
-                      extentRatio: 0.2,
-                      motion: const StretchMotion(),
-                      children: [
-                        SlidableAction(
-                          onPressed: (context) {
+                    // endActionPane: ActionPane(
+                    //   extentRatio: 0.2,
+                    //   motion: const StretchMotion(),
+                    //   children: [
+                    //     SlidableAction(
+                    //       onPressed: (context) {
 
-                          },
-                          backgroundColor: T(context).color.error,
-                          foregroundColor: T(context).color.onError,
-                          icon: Icons.delete,
-                        ),
-                      ],
-                    ),
+                    //       },
+                    //       backgroundColor: T(context).color.error,
+                    //       foregroundColor: T(context).color.onError,
+                    //       icon: Icons.delete,
+                    //     ),
+                    //   ],
+                    // ),
                     child: Container(
                       decoration: BoxDecoration(
                         color: T(context).color.surface,
@@ -210,18 +210,18 @@ class _ExerciseGroupWidgetState extends State<ExerciseGroupWidget> {
                               ),
                             ),
                           ),
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  CupertinoIcons.arrow_left,
-                                  color: T(context).color.primary,
-                                  size: 20,
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   children: [
+                          //     IconButton(
+                          //       onPressed: () {},
+                          //       icon: Icon(
+                          //         CupertinoIcons.delete,
+                          //         color: T(context).color.primary,
+                          //         size: 20,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),

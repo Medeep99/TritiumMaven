@@ -48,7 +48,7 @@ class _GoalScreenState extends State<GoalScreen> {
     }
 
     // Mock routine and exercise list data
-    generateMockWorkoutData(context, newGoal ?? 3);
+    generateWorkoutTemplate(context, newGoal ?? 3);
   }
 
   @override
